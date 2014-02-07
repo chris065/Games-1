@@ -1,0 +1,48 @@
+class FrogMain
+{
+	public static Frog frog;
+	private static Lane[] allLanes;
+
+	private static void CreateLanes()
+	private static void RefreshConsole()
+	private static void StartNewGame(int lives)
+	private static void SetConsole()
+	public static bool ValidateCursorPosition(int col, int row)
+}
+
+class Lane
+{
+	private Direction dir;
+	public List<Car> cars = new List<Car>();
+	public Lane(int row, Direction dir, long speed)
+	public void GenerateCar()
+	public void UpdateCarPositions()
+	public void DrawCars()
+}
+
+class Car
+{
+	private Direction direction;
+	public char[,] parts = 
+	{ 
+	  {' ',' ','=','=',' ',' '},
+	  {'=','o','=','=','o','='}
+	};
+	public Car(int row, int col, ConsoleColor colour, Direction direction)
+	public void Move()
+	internal void Redraw() 
+	private void CheckIsFrogHere()
+}
+
+public class Frog
+{
+	private char[,] parts =
+	{
+		{' ', '@', '.', '.', '@', ' '},
+		{'(', '-', '+', '+', '-', ')'},
+	};
+	public Frog()
+	public void Move(ConsoleKey pressedKey)
+	public void Redraw()
+	public void DrawRoadKill()
+}

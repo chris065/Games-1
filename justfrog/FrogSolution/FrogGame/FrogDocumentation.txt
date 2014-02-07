@@ -1,0 +1,13 @@
+﻿// Ivan, NinaA
+class	Car
+
+// Ivan, NinaA
+class	Frog				
+	
+					
+// Georgi, Nincheto			
+class	Lane				
+
+
+// Jivko, Acho
+class	FrogMain				
