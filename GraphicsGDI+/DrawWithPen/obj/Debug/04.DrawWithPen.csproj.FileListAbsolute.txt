@@ -1,0 +1,8 @@
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\DrawWithPen\bin\Debug\DrawWithPen.exe.config
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\DrawWithPen\bin\Debug\DrawWithPen.exe
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\DrawWithPen\bin\Debug\DrawWithPen.pdb
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\DrawWithPen\obj\Debug\DrawWithPen.Form1.resources
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\DrawWithPen\obj\Debug\DrawWithPen.Properties.Resources.resources
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\DrawWithPen\obj\Debug\04.DrawWithPen.csproj.GenerateResource.Cache
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\DrawWithPen\obj\Debug\DrawWithPen.exe
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\DrawWithPen\obj\Debug\DrawWithPen.pdb

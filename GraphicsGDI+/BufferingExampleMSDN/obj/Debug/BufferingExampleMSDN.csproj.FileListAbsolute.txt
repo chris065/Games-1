@@ -1,0 +1,8 @@
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\BufferingExampleMSDN\bin\Debug\BufferingExampleMSDN.exe.config
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\BufferingExampleMSDN\obj\Debug\BufferingExampleMSDN.Form1.resources
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\BufferingExampleMSDN\obj\Debug\BufferingExampleMSDN.Properties.Resources.resources
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\BufferingExampleMSDN\obj\Debug\BufferingExampleMSDN.csproj.GenerateResource.Cache
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\BufferingExampleMSDN\bin\Debug\BufferingExampleMSDN.exe
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\BufferingExampleMSDN\bin\Debug\BufferingExampleMSDN.pdb
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\BufferingExampleMSDN\obj\Debug\BufferingExampleMSDN.exe
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\BufferingExampleMSDN\obj\Debug\BufferingExampleMSDN.pdb

@@ -1,0 +1,9 @@
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\FunWithGraphics\bin\Debug\FunWithGraphics.exe.config
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\FunWithGraphics\obj\Debug\05.FunWithGraphics.csprojResolveAssemblyReference.cache
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\FunWithGraphics\obj\Debug\FunWithGraphics.Form1.resources
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\FunWithGraphics\obj\Debug\FunWithGraphics.Properties.Resources.resources
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\FunWithGraphics\obj\Debug\05.FunWithGraphics.csproj.GenerateResource.Cache
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\FunWithGraphics\bin\Debug\FunWithGraphics.exe
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\FunWithGraphics\bin\Debug\FunWithGraphics.pdb
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\FunWithGraphics\obj\Debug\FunWithGraphics.exe
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\FunWithGraphics\obj\Debug\FunWithGraphics.pdb

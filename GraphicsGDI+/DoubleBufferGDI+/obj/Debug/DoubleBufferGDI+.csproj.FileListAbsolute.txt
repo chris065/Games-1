@@ -1,0 +1,9 @@
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\DoubleBufferGDI+\bin\Debug\DoubleBufferGDI+.exe.config
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\DoubleBufferGDI+\bin\Debug\DoubleBufferGDI+.exe
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\DoubleBufferGDI+\bin\Debug\DoubleBufferGDI+.pdb
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\DoubleBufferGDI+\obj\Debug\DoubleBufferGDI+.csprojResolveAssemblyReference.cache
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\DoubleBufferGDI+\obj\Debug\DoubleBufferGDI.Form1.resources
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\DoubleBufferGDI+\obj\Debug\DoubleBufferGDI.Properties.Resources.resources
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\DoubleBufferGDI+\obj\Debug\DoubleBufferGDI+.csproj.GenerateResource.Cache
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\DoubleBufferGDI+\obj\Debug\DoubleBufferGDI+.exe
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\DoubleBufferGDI+\obj\Debug\DoubleBufferGDI+.pdb

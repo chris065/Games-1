@@ -1,0 +1,11 @@
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\ThreeImages\bin\Debug\ThreeImages.exe.config
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\ThreeImages\obj\Debug\ThreeImages.exe
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\ThreeImages\obj\Debug\ThreeImages.pdb
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\github\GraphicsGDI+\ThreeImages\bin\Debug\ThreeImages.exe.config
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\github\GraphicsGDI+\ThreeImages\obj\Debug\ThreeImages.exe
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\github\GraphicsGDI+\ThreeImages\obj\Debug\ThreeImages.pdb
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\github\GraphicsGDI+\ThreeImages\bin\Debug\ThreeImages.exe
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\github\GraphicsGDI+\ThreeImages\bin\Debug\ThreeImages.pdb
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\github\GraphicsGDI+\ThreeImages\obj\Debug\ThreeImagesForm.resources
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\github\GraphicsGDI+\ThreeImages\obj\Debug\ThreeImages.Properties.Resources.resources
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\github\GraphicsGDI+\ThreeImages\obj\Debug\09.ThreeImages.csproj.GenerateResource.Cache
