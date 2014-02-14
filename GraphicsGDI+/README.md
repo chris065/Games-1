@@ -1,7 +1,7 @@
 GraphicsGDI+
 =========
 
-A collection of various projects using GDI+ graphics with Windows Forms.
+A collection of various projects using GDI+ graphics with Windows Forms:
 
   - Drawing with pen
   - Drawing an image from file
