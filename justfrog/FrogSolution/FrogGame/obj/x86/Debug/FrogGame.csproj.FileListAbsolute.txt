@@ -5,3 +5,5 @@ C:\Users\JR\Google Drive\Telerik Academy\VS 2013 Projects\Codeplex\justfrog\Frog
 C:\Users\JR\Google Drive\Telerik Academy\VS 2013 Projects\Codeplex\justfrog\FrogSolution\FrogGame\obj\x86\Debug\FrogGame.pdb
 C:\Users\JR\Desktop\Google Drive\Telerik Academy\VS 2013 Projects\Codeplex\justfrog\FrogSolution\FrogGame\obj\x86\Debug\FrogGame.exe
 C:\Users\JR\Desktop\Google Drive\Telerik Academy\VS 2013 Projects\Codeplex\justfrog\FrogSolution\FrogGame\obj\x86\Debug\FrogGame.pdb
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\github\Games\justfrog\FrogSolution\FrogGame\obj\x86\Debug\FrogGame.exe
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\github\Games\justfrog\FrogSolution\FrogGame\obj\x86\Debug\FrogGame.pdb
