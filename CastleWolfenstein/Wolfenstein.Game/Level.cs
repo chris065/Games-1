@@ -34,7 +34,7 @@
         private string[,] mapRegister; // map register for all objects
 
         // The player
-        private Player player;
+        private Hero player;
 
         public Level()
         {
@@ -104,7 +104,12 @@
                     char tileChar = lines[row][col];
                     if (tileChar == 'P')
                     {
-                        this.player = new Player(col * TileSize, row * TileSize, Resources.Tiles28x46Player);
+                        if (this.player != null)
+                        {
+                            throw new ApplicationException("There cannot be more than one player!");
+                        }
+
+                        this.player = new Hero(col * TileSize, row * TileSize, Resources.Tiles28x46Player);
                         this.mapRegister[row, col] = this.player.GetType().Name;
                         this.wallMap[row, col] = TileType.EmptyTile;
                     }
