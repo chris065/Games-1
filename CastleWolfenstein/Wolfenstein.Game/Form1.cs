@@ -7,54 +7,34 @@
     {
         private Game game;
 
-        public Form1()
-            : base()
+        public Form1() : base()
         {
+            // Required by Windows
             InitializeComponent();
         }
 
-        public override int FormWidth
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-            set
-            {
-                throw new System.NotImplementedException();
-            }
-        }
-
-        public override int FormHeight
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-            set
-            {
-                throw new System.NotImplementedException();
-            }
-        }
-
-        public override void RunGame(GameTime gameTime, Graphics screenGraphics)
-        {
-            this.game.Run(gameTime, screenGraphics);
-        }
-
+        /// <summary>
+        /// InitializeGame will be called once per game and is the place to load
+        /// all of your content and set up the game window.
+        /// You must set the window Client size here!
+        /// </summary>
         public override void InitializeGame()
         {
             this.game = new Game();
+
+            // Set the form client size to the level size
+            this.ClientSize = this.game.level.ClientSize;
         }
 
-        public override void OnKeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        /// <summary>
+        /// Allows the game to run logic such as updating the world,
+        /// checking for collisions, handling input and drawing the game.
+        /// </summary>
+        public override void Update(GameTime gameTime, Graphics screenGraphics, KeyboardState keyboardState)
         {
-            this.game.level.OnKeyDown(e.KeyCode);
+            this.game.Run(gameTime, screenGraphics, keyboardState);
         }
 
-        public override void OnKeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
-        {
-            this.game.level.OnKeyUp();
-        }
+
     }
 }

@@ -17,7 +17,7 @@ namespace Wolfenstein.Game
         private readonly Font textFont = new Font("Consolas", 12, FontStyle.Bold);
         private readonly SolidBrush textBrush = new SolidBrush(Color.FromArgb(255, 255, 85));
         private double fps = 0;
-     
+
         // Map
         private const int TILE_SIZE = 16;
         private const int MAP_WIDTH = 33;
@@ -33,7 +33,7 @@ namespace Wolfenstein.Game
         private Bitmap bmpTileEmpty;
         private Bitmap bmpTileBlack;
         private Bitmap bmpTileWall;
-        private Bitmap bmpWall;
+        private Bitmap mapWalls;
 
         // The player
         private Player player;
@@ -59,25 +59,25 @@ namespace Wolfenstein.Game
 
             Dictionary<char, Bitmap> tileImages = new Dictionary<char, Bitmap>();
             tileImages.Add('.', bmpTileBlack);
-            tileImages.Add('W', bmpTileWall); 
-            bmpWall = new TileMapBuilder(map, tileImages, TILE_SIZE).ToImage(); 
+            tileImages.Add('W', bmpTileWall);
+            mapWalls = new TileMapBuilder(map, tileImages, TILE_SIZE).ToImage();
 
             Collisions.map = map;
             Collisions.tileSize = TILE_SIZE;
             Collisions.mapRectangle = this.MapRectangle;
 
-            player = new Hero(TILE_SIZE, TILE_SIZE); // Put on empty tile!
+            player = new Player(TILE_SIZE, TILE_SIZE, Resources.Tiles28x46Player); // Put on empty tile!
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, KeyboardState keyboardState)
         {
-            player.Move(gameTime);
+            player.Move(gameTime, keyboardState);
         }
 
         public void Draw(GameTime gameTime, Graphics screenGraphics)
         {
             // Draw the walls to the map buffer
-            mapGraphics.DrawImage(bmpWall, 0, 0, bmpWall.Width, bmpWall.Height);
+            mapGraphics.DrawImage(mapWalls, 0, 0, mapWalls.Width, mapWalls.Height);
 
             // Draw the player to the map buffer
             player.Draw(gameTime, mapGraphics);
@@ -149,9 +149,9 @@ namespace Wolfenstein.Game
             // Draw the text messages (third line) to the screenbuffer
             fps = (1000 / gameTime.ElapsedTime.TotalMilliseconds) * 0.10 + fps * 0.90;
             string line2 = string.Format("fps: {0,5:F1}", fps);
-            g.DrawString(line2, textFont, textBrush, CenterTextX(line2), MapYoffset + this.MapRectangle.Bottom + 20);            
+            g.DrawString(line2, textFont, textBrush, CenterTextX(line2), MapYoffset + this.MapRectangle.Bottom + 20);
         }
-        
+
         /// <summary>
         /// Returns the X coord of the text so that it is centered on the screen
         /// </summary>
@@ -162,31 +162,6 @@ namespace Wolfenstein.Game
                 return 0;
             }
             return (this.ClientSize.Width - text.Length * 9) / 2;
-        }
-
-        public void OnKeyDown(Keys key)
-        {
-            if (key == Keys.Left)
-            {
-                player.playerDirection = Direction.Left;
-            }
-            else if (key == Keys.Right)
-            {
-                player.playerDirection = Direction.Right;
-            }
-            else if (key == Keys.Up)
-            {
-                player.playerDirection = Direction.Up;
-            }
-            else if (key == Keys.Down)
-            {
-                player.playerDirection = Direction.Down;
-            }
-        }
-
-        public void OnKeyUp()
-        {
-            player.playerDirection = Direction.Center;
         }
     }
 }

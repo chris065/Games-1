@@ -2,6 +2,10 @@
 {
     using System;
 
+    /// <summary>
+    /// Provides elapsed game time since the last update
+    /// and total time since the start of the game.
+    /// </summary>
     public class GameTime
     {
         public GameTime(TimeSpan elapsedTime, TimeSpan totalTime)

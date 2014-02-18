@@ -18,10 +18,17 @@ namespace Wolfenstein.Game
             this.level = new Level();
         }
 
-        internal void Run(GameTime gameTime, Graphics screenGraphics)
+        /// <summary>
+        /// Run game logic here such as updating the world,
+        /// checking for collisions, handling input and drawing the game.
+        /// This method will be called as frequently as possible,
+        /// when the Windows message queue is empty.
+        /// Check GameTime to get the elapsed time since the last update.
+        /// </summary>
+        internal void Run(GameTime gameTime, Graphics screenGraphics, KeyboardState keyboardState)
         {
             // This is the main game loop
-            level.Update(gameTime);
+            level.Update(gameTime, keyboardState);
             level.Draw(gameTime, screenGraphics);
         }
     }

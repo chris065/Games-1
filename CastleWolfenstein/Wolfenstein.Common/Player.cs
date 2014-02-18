@@ -3,10 +3,11 @@
     using System.Drawing;
     //using Wolfenstein.Common.Properties;
     using System;
+    using System.Windows.Forms;
 
     public enum Direction { Left, Right, Up, Down, Center }
 
-    public abstract class Player
+    public class Player
     {
         // Player speed in pixels per second
         private const int PlayerSpeed = 100;
@@ -20,26 +21,40 @@
         private Point mapPosition;
         public Direction playerDirection;
 
-        public Player(int x, int y)
+        public Player(int x, int y, Bitmap sprite)
         {
-            LoadResources();
             position = new PointF(x, y);
             mapPosition = new Point((int)Math.Round(position.X), (int)Math.Round(position.Y));
+            bmpPlayer = sprite;
         }
 
-        //protected void LoadResources()
-        //{
-        //    bmpPlayer = Resources.Tiles28x46Player;
-        //}
-
-        abstract protected void LoadResources();
-
-        public void Move(GameTime gameTime)
+        private void CheckDirection(KeyboardState keyboardState)
         {
-            if (playerDirection == Direction.Center)
+            if (keyboardState.IsKeyDown(Keys.Left))
             {
-                return;
+                this.playerDirection = Direction.Left;
             }
+            else if (keyboardState.IsKeyDown(Keys.Right))
+            {
+                this.playerDirection = Direction.Right;
+            }
+            else if (keyboardState.IsKeyDown(Keys.Up))
+            {
+                this.playerDirection = Direction.Up;
+            }
+            else if (keyboardState.IsKeyDown(Keys.Down))
+            {
+                this.playerDirection = Direction.Down;
+            }
+            else
+            {
+                this.playerDirection = Direction.Center;
+            }
+        }
+
+        public void Move(GameTime gameTime, KeyboardState keyboardState)
+        {
+            CheckDirection(keyboardState);
 
             PointF temp_position = position;
             Point temp_mapPos = mapPosition;

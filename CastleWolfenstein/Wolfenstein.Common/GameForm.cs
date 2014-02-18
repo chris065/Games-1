@@ -11,6 +11,7 @@
         private readonly Graphics screenGraphics;
         private readonly FastLoop fastLoop;
         private float fps = 0;
+        private readonly KeyboardState keyboardState;
 
         public static bool DEBUG_MODE { get; private set; }
 
@@ -22,12 +23,11 @@
             // Initialize the game - this happens only once
             this.InitializeGame();
 
-            // Set the form client size to the level size
-            this.ClientSize = new Size(this.FormWidth, this.FormHeight);
-
             // Set the graphics device
             this.screenBuffer = new Bitmap(ClientSize.Width, ClientSize.Height);
             this.screenGraphics = Graphics.FromImage(screenBuffer);
+
+            this.keyboardState = new KeyboardState();
 
             // Runs the game loop whenever the application is idle
             this.fastLoop = new FastLoop(GameLoop);
@@ -35,21 +35,23 @@
             DEBUG_MODE = true;
         }
 
-        public abstract int FormWidth { get; set; }
-
-        public abstract int FormHeight { get; set; }
-
-        public abstract void RunGame(GameTime gameTime, Graphics screenGraphics);
+        public abstract void Update(GameTime gameTime, Graphics screenGraphics, KeyboardState keyboardState);
 
         public abstract void InitializeGame();
 
-        public abstract void OnKeyDown(object sender, KeyEventArgs e);
+        public void OnKeyDown(object sender, KeyEventArgs e)
+        {
+            this.keyboardState.OnKeyDown(e.KeyCode);
+        }
 
-        public abstract void OnKeyUp(object sender, KeyEventArgs e);
+        public void OnKeyUp(object sender, KeyEventArgs e)
+        {
+            this.keyboardState.OnKeyUp(e.KeyCode);
+        }
 
         void GameLoop(GameTime gameTime)
         {
-            RunGame(gameTime, screenGraphics);
+            Update(gameTime, screenGraphics, keyboardState);
 
             // Redraw the Form window
             Invalidate();
