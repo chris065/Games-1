@@ -11,9 +11,6 @@ namespace Wolfenstein.Game
 {
     class Hero : HumanPlayer
     {
-        // Player speed in pixels per second
-        private const int PlayerSpeed = 100;
-
         // Animation speed in frames per second
         private const float AnimationSpeed = 12.0f;
         private float currentFrame = 0;
