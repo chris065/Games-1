@@ -1,16 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using Wolfenstein.Game.Properties;
-using Wolfenstein.Common;
-
-namespace Wolfenstein.Game
+﻿namespace Wolfenstein.Game
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Drawing;
+    using System.IO;
+    using System.Linq;
+    using System.Windows.Forms;
+    using Wolfenstein.Common;
+    using Wolfenstein.Game.Properties;
+
     public class Level
     {
+        // The offset of the map from the top-left corner of the window
+        private const int MapXoffset = 20;
+        private const int MapYoffset = 20;
+
+        // The height of the bottom area where text messages are shown
+        private const int TextscreenHeight = 40;
+
         // Level graphics
         private Bitmap mapBuffer;
         private Graphics mapGraphics;
@@ -19,54 +26,27 @@ namespace Wolfenstein.Game
         private double fps = 0;
 
         // Map
-        private const int TILE_SIZE = 16;
-        private const int MAP_WIDTH = 33;
-        private const int MAP_HEIGHT = 19;
-        private char[,] map;
-        public Rectangle MapRectangle { get; private set; }
+        private const int TileSize = 16;
+        private char[,] charMap;
+        public Size MapSize { get; private set; }
         public Size ClientSize { get; private set; }
-        public int MapXoffset { get; private set; }
-        public int MapYoffset { get; private set; }
-        public int TextscreenHeight { get; private set; }
-
-        // Resources
-        private Bitmap bmpTileEmpty;
-        private Bitmap bmpTileBlack;
-        private Bitmap bmpTileWall;
-        private Bitmap mapWalls;
+        private Bitmap mapImage;
 
         // The player
         private Player player;
 
         public Level()
         {
-            // The offset of the map from the top-left corner of the window
-            MapXoffset = 20;
-            MapYoffset = 20;
+            // Build the map
+            this.charMap = this.LoadMapFromFile(0);
+            this.BuildMapImage();
 
-            // The height of the bottom area where text messages are shown
-            TextscreenHeight = 40;
-
-            MapRectangle = new Rectangle(0, 0, MAP_WIDTH * TILE_SIZE, MAP_HEIGHT * TILE_SIZE);
-            ClientSize = new Size(MapRectangle.Width + 2 * MapXoffset, MapRectangle.Height + MapYoffset + TextscreenHeight);
+            // Create new player
+            this.player = new Player(TileSize, TileSize, Resources.Tiles28x46Player); // Put on empty tile!            
 
             // The Graphics device used to draw everything on the map (tiles, player, enemies etc.)
-            mapBuffer = new Bitmap(MapRectangle.Width, MapRectangle.Height);
-            mapGraphics = Graphics.FromImage(mapBuffer);
-
-            map = LoadMapFromFile();
-            LoadResources();
-
-            Dictionary<char, Bitmap> tileImages = new Dictionary<char, Bitmap>();
-            tileImages.Add('.', bmpTileBlack);
-            tileImages.Add('W', bmpTileWall);
-            mapWalls = new TileMapBuilder(map, tileImages, TILE_SIZE).ToImage();
-
-            Collisions.map = map;
-            Collisions.tileSize = TILE_SIZE;
-            Collisions.mapRectangle = this.MapRectangle;
-
-            player = new Player(TILE_SIZE, TILE_SIZE, Resources.Tiles28x46Player); // Put on empty tile!
+            this.mapBuffer = new Bitmap(MapSize.Width, MapSize.Height);
+            this.mapGraphics = Graphics.FromImage(mapBuffer);
         }
 
         public void Update(GameTime gameTime, KeyboardState keyboardState)
@@ -77,7 +57,7 @@ namespace Wolfenstein.Game
         public void Draw(GameTime gameTime, Graphics screenGraphics)
         {
             // Draw the walls to the map buffer
-            mapGraphics.DrawImage(mapWalls, 0, 0, mapWalls.Width, mapWalls.Height);
+            mapGraphics.DrawImage(mapImage, 0, 0, mapImage.Width, mapImage.Height);
 
             // Draw the player to the map buffer
             player.Draw(gameTime, mapGraphics);
@@ -92,10 +72,32 @@ namespace Wolfenstein.Game
             DrawMessages(gameTime, screenGraphics);
         }
 
-        private char[,] LoadMapFromFile()
+        private void BuildMapImage()
+        {
+            // Load the resources
+            Bitmap bmpTileBlack = Resources.Tile16x16Black;
+            Bitmap bmpTileEmpty = Resources.Tile16x16Empty;
+            Bitmap bmpTileWall = Resources.Tile16x16Wall;
+
+            // Build a Bitmap image from the char[,] map using the resources
+            Dictionary<char, Bitmap> tileImages = new Dictionary<char, Bitmap>();
+            tileImages.Add('.', bmpTileBlack);
+            tileImages.Add('W', bmpTileWall);
+            mapImage = new TileMapBuilder(charMap, tileImages, TileSize).ToImage();
+
+            // Set the map size and main window client size (in pixels)
+            this.MapSize = new Size(mapImage.Width, mapImage.Height);
+            this.ClientSize = new Size(MapSize.Width + (2 * MapXoffset), MapSize.Height + MapYoffset + TextscreenHeight);
+
+            // Pass the map to the Collisions class
+            Collisions.map = charMap;
+            Collisions.tileSize = TileSize;
+            Collisions.mapSize = this.MapSize;
+        }
+
+        private char[,] LoadMapFromFile(int levelIndex)
         {
             // Load the level map.
-            int levelIndex = 0;
             string levelPath = string.Format(@"...\...\Level{0}.txt", levelIndex);
 
             // Load the map and ensure all of the lines are the same length.
@@ -109,7 +111,10 @@ namespace Wolfenstein.Game
                 {
                     lines.Add(line);
                     if (line.Length != width)
-                        throw new Exception(String.Format("The length of line {0} is different from all preceeding lines.", lines.Count));
+                    {
+                        throw new Exception(string.Format("The length of line {0} is different from all preceeding lines.", lines.Count));
+                    }
+
                     line = reader.ReadLine();
                 }
             }
@@ -129,13 +134,6 @@ namespace Wolfenstein.Game
             return map;
         }
 
-        private void LoadResources()
-        {
-            bmpTileEmpty = Resources.Tile16x16Empty;
-            bmpTileWall = Resources.Tile16x16Wall;
-            bmpTileBlack = Resources.Tile16x16Black;
-        }
-
         private void DrawMessages(GameTime gameTime, Graphics g)
         {
             // Draw the text messages (first line) to the screenbuffer
@@ -144,12 +142,12 @@ namespace Wolfenstein.Game
 
             // Draw the text messages (second line) to the screenbuffer
             string line1 = string.Format("Use the arrow keys to move around...");
-            g.DrawString(line1, textFont, textBrush, CenterTextX(line1), MapYoffset + this.MapRectangle.Bottom);
+            g.DrawString(line1, textFont, textBrush, CenterTextX(line1), MapYoffset + this.MapSize.Height);
 
             // Draw the text messages (third line) to the screenbuffer
-            fps = (1000 / gameTime.ElapsedTime.TotalMilliseconds) * 0.10 + fps * 0.90;
+            fps = ((1000 / gameTime.ElapsedTime.TotalMilliseconds) * 0.10) + (fps * 0.90);
             string line2 = string.Format("fps: {0,5:F1}", fps);
-            g.DrawString(line2, textFont, textBrush, CenterTextX(line2), MapYoffset + this.MapRectangle.Bottom + 20);
+            g.DrawString(line2, textFont, textBrush, CenterTextX(line2), MapYoffset + this.MapSize.Height + 20);
         }
 
         /// <summary>
@@ -161,7 +159,8 @@ namespace Wolfenstein.Game
             {
                 return 0;
             }
-            return (this.ClientSize.Width - text.Length * 9) / 2;
+
+            return (this.ClientSize.Width - (text.Length * 9)) / 2;
         }
     }
 }

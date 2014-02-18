@@ -28,33 +28,38 @@
             bmpPlayer = sprite;
         }
 
-        private void CheckDirection(KeyboardState keyboardState)
+        private Direction GetDirection(KeyboardState keyboardState)
         {
             if (keyboardState.IsKeyDown(Keys.Left))
             {
-                this.playerDirection = Direction.Left;
+                return Direction.Left;
             }
             else if (keyboardState.IsKeyDown(Keys.Right))
             {
-                this.playerDirection = Direction.Right;
+                return Direction.Right;
             }
             else if (keyboardState.IsKeyDown(Keys.Up))
             {
-                this.playerDirection = Direction.Up;
+                return Direction.Up;
             }
             else if (keyboardState.IsKeyDown(Keys.Down))
             {
-                this.playerDirection = Direction.Down;
+                return Direction.Down;
             }
             else
             {
-                this.playerDirection = Direction.Center;
+                return Direction.Center;
             }
         }
 
         public void Move(GameTime gameTime, KeyboardState keyboardState)
         {
-            CheckDirection(keyboardState);
+            this.playerDirection = GetDirection(keyboardState);
+
+            if (playerDirection == Direction.Center)
+            {
+                return;
+            }
 
             PointF temp_position = position;
             Point temp_mapPos = mapPosition;

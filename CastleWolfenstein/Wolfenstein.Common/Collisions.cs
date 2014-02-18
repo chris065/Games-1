@@ -7,15 +7,15 @@
     {
         public static int tileSize;
         public static char[,] map;
-        public static Rectangle mapRectangle;
+        public static Size mapSize;
 
         public static bool ValidateXY(Rectangle bounds)
         {
             return
                 bounds.Left >= 0 &&
-                bounds.Right <= mapRectangle.Width &&
+                bounds.Right <= mapSize.Width &&
                 bounds.Top >= 0 &&
-                bounds.Bottom <= mapRectangle.Height;
+                bounds.Bottom <= mapSize.Height;
         }
 
         public static bool CheckWallCollision(Rectangle bounds)

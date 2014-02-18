@@ -4,6 +4,10 @@ using System.Drawing;
 
 namespace Wolfenstein.Common
 {
+    /// <summary>
+    /// Builds a Bitmap image from a char[,] map and
+    /// a Dictionary that contains the bitmap to use for each char.
+    /// </summary>
     public class TileMapBuilder
     {
         private Bitmap mapImage;
