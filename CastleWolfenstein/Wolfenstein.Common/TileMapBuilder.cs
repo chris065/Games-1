@@ -12,7 +12,7 @@ namespace Wolfenstein.Common
     {
         private Bitmap mapImage;
 
-        public TileMapBuilder(char[,] map, Dictionary<char, Bitmap> dictionary, int tileSize)
+        public TileMapBuilder(TileType[,] map, Dictionary<TileType, Bitmap> dictionary, int tileSize)
         {
             int mapRows = map.GetLength(0);
             int mapCols = map.GetLength(1);

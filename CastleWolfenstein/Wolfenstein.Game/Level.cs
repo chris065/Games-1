@@ -27,10 +27,11 @@
 
         // Map
         private const int TileSize = 16;
-        private char[,] charMap;
         public Size MapSize { get; private set; }
         public Size ClientSize { get; private set; }
         private Bitmap mapImage;
+        private TileType[,] wallMap; // map for the walls
+        private string[,] mapRegister; // map register for all objects
 
         // The player
         private Player player;
@@ -38,11 +39,8 @@
         public Level()
         {
             // Build the map
-            this.charMap = this.LoadMapFromFile(0);
+            this.LoadMapFromFile(0);
             this.BuildMapImage();
-
-            // Create new player
-            this.player = new Player(TileSize, TileSize, Resources.Tiles28x46Player); // Put on empty tile!            
 
             // The Graphics device used to draw everything on the map (tiles, player, enemies etc.)
             this.mapBuffer = new Bitmap(MapSize.Width, MapSize.Height);
@@ -72,30 +70,7 @@
             DrawMessages(gameTime, screenGraphics);
         }
 
-        private void BuildMapImage()
-        {
-            // Load the resources
-            Bitmap bmpTileBlack = Resources.Tile16x16Black;
-            Bitmap bmpTileEmpty = Resources.Tile16x16Empty;
-            Bitmap bmpTileWall = Resources.Tile16x16Wall;
-
-            // Build a Bitmap image from the char[,] map using the resources
-            Dictionary<char, Bitmap> tileImages = new Dictionary<char, Bitmap>();
-            tileImages.Add('.', bmpTileBlack);
-            tileImages.Add('W', bmpTileWall);
-            mapImage = new TileMapBuilder(charMap, tileImages, TileSize).ToImage();
-
-            // Set the map size and main window client size (in pixels)
-            this.MapSize = new Size(mapImage.Width, mapImage.Height);
-            this.ClientSize = new Size(MapSize.Width + (2 * MapXoffset), MapSize.Height + MapYoffset + TextscreenHeight);
-
-            // Pass the map to the Collisions class
-            Collisions.map = charMap;
-            Collisions.tileSize = TileSize;
-            Collisions.mapSize = this.MapSize;
-        }
-
-        private char[,] LoadMapFromFile(int levelIndex)
+        private void LoadMapFromFile(int levelIndex)
         {
             // Load the level map.
             string levelPath = string.Format(@"...\...\Level{0}.txt", levelIndex);
@@ -119,19 +94,53 @@
                 }
             }
 
-            // Allocate the tile grid.
-            char[,] map = new char[lines.Count, width];
-            for (int row = 0; row < map.GetLength(0); ++row)
+            // Allocate the tile grid and fill the map register.
+            this.wallMap = new TileType[lines.Count, width];
+            this.mapRegister = new string[lines.Count, width];
+            for (int row = 0; row < wallMap.GetLength(0); ++row)
             {
-                for (int col = 0; col < map.GetLength(1); ++col)
+                for (int col = 0; col < wallMap.GetLength(1); ++col)
                 {
-                    char tileType = lines[row][col];
-                    map[row, col] = tileType;
+                    char tileChar = lines[row][col];
+                    if (tileChar == 'P')
+                    {
+                        this.player = new Player(col * TileSize, row * TileSize, Resources.Tiles28x46Player);
+                        this.mapRegister[row, col] = this.player.GetType().Name;
+                        this.wallMap[row, col] = TileType.EmptyTile;
+                    }
+                    else if (tileChar == '.')
+                    {
+                        this.wallMap[row, col] = TileType.EmptyTile;
+                    }
+                    else if (tileChar == 'W')
+                    {
+                        this.wallMap[row, col] = TileType.WallTile;
+                    }
                 }
             }
+        }
 
-            // Verify that the level has a beginning and an end.
-            return map;
+        private void BuildMapImage()
+        {
+            // Load the resources
+            Bitmap bmpTileBlack = Resources.Tile16x16Black;
+            Bitmap bmpTileEmpty = Resources.Tile16x16Empty;
+            Bitmap bmpTileWall = Resources.Tile16x16Wall;
+
+            // Build a Bitmap image from the char[,] map using the resources
+            var tileImages = new Dictionary<TileType, Bitmap>();
+            tileImages.Add(TileType.EmptyTile, bmpTileBlack);
+            tileImages.Add(TileType.WallTile, bmpTileWall);
+            mapImage = new TileMapBuilder(wallMap, tileImages, TileSize).ToImage();
+
+            // Set the map size and main window client size (in pixels)
+            this.MapSize = new Size(mapImage.Width, mapImage.Height);
+            this.ClientSize = new Size(MapSize.Width + (2 * MapXoffset), MapSize.Height + MapYoffset + TextscreenHeight);
+
+            // Pass the map to the Collisions class
+            Collisions.map = wallMap;
+            Collisions.tileSize = TileSize;
+            Collisions.mapSize = this.MapSize;
         }
 
         private void DrawMessages(GameTime gameTime, Graphics g)

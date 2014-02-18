@@ -48,9 +48,11 @@
     </Compile>
     <Compile Include="GameTime.cs" />
     <Compile Include="KeyboardState.cs" />
+    <Compile Include="Tile.cs" />
     <Compile Include="TileMapBuilder.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Vector2F.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

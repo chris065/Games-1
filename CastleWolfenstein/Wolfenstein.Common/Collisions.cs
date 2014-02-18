@@ -6,7 +6,7 @@
     public static class Collisions
     {
         public static int tileSize;
-        public static char[,] map;
+        public static TileType[,] map;
         public static Size mapSize;
 
         public static bool ValidateXY(Rectangle bounds)
@@ -30,7 +30,8 @@
             {
                 for (int col = leftTile; col < rightTile; col++)
                 {
-                    if (map[row, col] == 'W')
+                    // Only empty tiles are passable
+                    if (map[row, col] != TileType.EmptyTile)
                     {
                         return false;
                     }
