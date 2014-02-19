@@ -53,6 +53,7 @@
     <Compile Include="IMovable.cs" />
     <Compile Include="KeyboardState.cs" />
     <Compile Include="MovingObject.cs" />
+    <Compile Include="Sprite.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="TileMapBuilder.cs" />
     <Compile Include="HumanPlayer.cs" />
