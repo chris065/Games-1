@@ -52,7 +52,7 @@
             player.Move(gameTime, keyboardState);
         }
 
-        public void Draw(GameTime gameTime, Graphics screenGraphics)
+        public void Draw(GameTime gameTime, IGraphics renderer)
         {
             // Draw the walls to the map buffer
             mapGraphics.DrawImage(mapImage, 0, 0, mapImage.Width, mapImage.Height);
@@ -61,13 +61,13 @@
             player.Draw(gameTime, mapGraphics);
 
             // Clear the screen background (because it is larger than the map)
-            screenGraphics.Clear(Color.Black);
+            renderer.Clear(Color.Black);
 
             // Draw the map to the screenbuffer
-            screenGraphics.DrawImage(mapBuffer, MapXoffset, MapYoffset, mapBuffer.Width, mapBuffer.Height);
+            renderer.DrawImage(mapBuffer, MapXoffset, MapYoffset, mapBuffer.Width, mapBuffer.Height);
 
             // Draw the text messages to the screenbuffer
-            DrawMessages(gameTime, screenGraphics);
+            DrawMessages(gameTime, renderer);
         }
 
         private void LoadMapFromFile(int levelIndex)
@@ -148,20 +148,20 @@
             Collisions.mapSize = this.MapSize;
         }
 
-        private void DrawMessages(GameTime gameTime, Graphics g)
+        private void DrawMessages(GameTime gameTime, IGraphics renderer)
         {
             // Draw the text messages (first line) to the screenbuffer
             string line0 = string.Format("LEVEL 1");
-            g.DrawString(line0, textFont, textBrush, CenterTextX(line0), 0);
+            renderer.DrawString(line0, textFont, textBrush, CenterTextX(line0), 0);
 
             // Draw the text messages (second line) to the screenbuffer
             string line1 = string.Format("Use the arrow keys to move around...");
-            g.DrawString(line1, textFont, textBrush, CenterTextX(line1), MapYoffset + this.MapSize.Height);
+            renderer.DrawString(line1, textFont, textBrush, CenterTextX(line1), MapYoffset + this.MapSize.Height);
 
             // Draw the text messages (third line) to the screenbuffer
             fps = ((1000 / gameTime.ElapsedTime.TotalMilliseconds) * 0.10) + (fps * 0.90);
             string line2 = string.Format("fps: {0,5:F1}", fps);
-            g.DrawString(line2, textFont, textBrush, CenterTextX(line2), MapYoffset + this.MapSize.Height + 20);
+            renderer.DrawString(line2, textFont, textBrush, CenterTextX(line2), MapYoffset + this.MapSize.Height + 20);
         }
 
         /// <summary>

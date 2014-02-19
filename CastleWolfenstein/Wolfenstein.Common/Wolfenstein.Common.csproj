@@ -47,7 +47,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GameTime.cs" />
+    <Compile Include="GDIGraphics.cs" />
     <Compile Include="IDrawable.cs" />
+    <Compile Include="IGraphics.cs" />
     <Compile Include="IMovable.cs" />
     <Compile Include="KeyboardState.cs" />
     <Compile Include="MovingObject.cs" />

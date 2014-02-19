@@ -30,9 +30,9 @@
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, handling input and drawing the game.
         /// </summary>
-        public override void Update(GameTime gameTime, Graphics screenGraphics, KeyboardState keyboardState)
+        public override void Update(GameTime gameTime, IGraphics renderer, KeyboardState keyboardState)
         {
-            this.game.Run(gameTime, screenGraphics, keyboardState);
+            this.game.Run(gameTime, renderer, keyboardState);
         }
 
 

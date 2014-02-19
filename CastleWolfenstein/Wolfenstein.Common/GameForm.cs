@@ -8,7 +8,7 @@
     public abstract class GameForm : Form
     {
         private readonly Bitmap screenBuffer;
-        private readonly Graphics screenGraphics;
+        private readonly GDIGraphics renderer;
         private readonly FastLoop fastLoop;
         private float fps = 0;
         private readonly KeyboardState keyboardState;
@@ -25,7 +25,7 @@
 
             // Set the graphics device
             this.screenBuffer = new Bitmap(ClientSize.Width, ClientSize.Height);
-            this.screenGraphics = Graphics.FromImage(screenBuffer);
+            this.renderer = new GDIGraphics(screenBuffer);
 
             this.keyboardState = new KeyboardState();
 
@@ -35,7 +35,7 @@
             DEBUG_MODE = true;
         }
 
-        public abstract void Update(GameTime gameTime, Graphics screenGraphics, KeyboardState keyboardState);
+        public abstract void Update(GameTime gameTime, IGraphics renderer, KeyboardState keyboardState);
 
         public abstract void InitializeGame();
 
@@ -51,7 +51,7 @@
 
         void GameLoop(GameTime gameTime)
         {
-            Update(gameTime, screenGraphics, keyboardState);
+            Update(gameTime, this.renderer, this.keyboardState);
 
             // Redraw the Form window
             Invalidate();

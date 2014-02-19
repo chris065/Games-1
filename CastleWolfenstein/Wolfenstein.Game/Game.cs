@@ -25,11 +25,11 @@ namespace Wolfenstein.Game
         /// when the Windows message queue is empty.
         /// Check GameTime to get the elapsed time since the last update.
         /// </summary>
-        internal void Run(GameTime gameTime, Graphics screenGraphics, KeyboardState keyboardState)
+        internal void Run(GameTime gameTime, IGraphics renderer, KeyboardState keyboardState)
         {
             // This is the main game loop
             level.Update(gameTime, keyboardState);
-            level.Draw(gameTime, screenGraphics);
+            level.Draw(gameTime, renderer);
         }
     }
 }
