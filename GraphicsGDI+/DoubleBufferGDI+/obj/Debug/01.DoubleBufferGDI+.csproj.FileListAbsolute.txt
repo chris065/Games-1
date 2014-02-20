@@ -10,3 +10,6 @@ C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\Double
 C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\github\GraphicsGDI+\DoubleBufferGDI+\bin\Debug\DoubleBufferGDI+.exe.config
 C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\github\GraphicsGDI+\DoubleBufferGDI+\obj\Debug\DoubleBufferGDI+.exe
 C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\github\GraphicsGDI+\DoubleBufferGDI+\obj\Debug\DoubleBufferGDI+.pdb
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\github\Games\GraphicsGDI+\DoubleBufferGDI+\bin\Debug\DoubleBufferGDI+.exe.config
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\github\Games\GraphicsGDI+\DoubleBufferGDI+\obj\Debug\DoubleBufferGDI+.exe
+C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\github\Games\GraphicsGDI+\DoubleBufferGDI+\obj\Debug\DoubleBufferGDI+.pdb

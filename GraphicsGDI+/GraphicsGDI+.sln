@@ -21,9 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "09.ThreeImages", "ThreeImag
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "06.DoubleBufferingComparison", "DoubleBufferingBufferedGraphics\06.DoubleBufferingComparison.csproj", "{02148B53-C380-457A-8CF1-8E6B7746E26C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wolf", "Wolf\Wolf.csproj", "{4484B2FA-CE4A-4456-AFEE-CA6FF7B922E2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "10.BufferedGraphicsTest", "..\..\..\..\..\Desktop\Wolf\SOTC-BufferedGraphicsTest\10.BufferedGraphicsTest.csproj", "{99D3854F-7C36-496F-A801-BB2921256A5A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "10.BufferedGraphicsTest", "SOTC-BufferedGraphicsTest\10.BufferedGraphicsTest.csproj", "{99D3854F-7C36-496F-A801-BB2921256A5A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,10 +65,6 @@ Global
 		{02148B53-C380-457A-8CF1-8E6B7746E26C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02148B53-C380-457A-8CF1-8E6B7746E26C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02148B53-C380-457A-8CF1-8E6B7746E26C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4484B2FA-CE4A-4456-AFEE-CA6FF7B922E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4484B2FA-CE4A-4456-AFEE-CA6FF7B922E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4484B2FA-CE4A-4456-AFEE-CA6FF7B922E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4484B2FA-CE4A-4456-AFEE-CA6FF7B922E2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{99D3854F-7C36-496F-A801-BB2921256A5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{99D3854F-7C36-496F-A801-BB2921256A5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99D3854F-7C36-496F-A801-BB2921256A5A}.Release|Any CPU.ActiveCfg = Release|Any CPU

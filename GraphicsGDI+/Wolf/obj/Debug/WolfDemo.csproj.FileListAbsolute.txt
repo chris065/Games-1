@@ -1,9 +1,0 @@
-C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\github\Games\GraphicsGDI+\Wolf\bin\Debug\Wolf.exe.config
-C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\github\Games\GraphicsGDI+\Wolf\obj\Debug\Wolf.exe
-C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\github\Games\GraphicsGDI+\Wolf\obj\Debug\Wolf.pdb
-C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\github\Games\GraphicsGDI+\Wolf\bin\Debug\Wolf.exe
-C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\github\Games\GraphicsGDI+\Wolf\bin\Debug\Wolf.pdb
-C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\github\Games\GraphicsGDI+\Wolf\obj\Debug\WolfDemo.csprojResolveAssemblyReference.cache
-C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\github\Games\GraphicsGDI+\Wolf\obj\Debug\Wolf.Form1.resources
-C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\github\Games\GraphicsGDI+\Wolf\obj\Debug\Wolf.Properties.Resources.resources
-C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\github\Games\GraphicsGDI+\Wolf\obj\Debug\WolfDemo.csproj.GenerateResource.Cache
