@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Wolfenstein.Common.AnimTexture" Collapsed="true">
+    <Position X="15.75" Y="5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Wolfenstein.Common.Collisions" Collapsed="true">
+    <Position X="14.25" Y="6.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Wolfenstein.Common.FastLoop" Collapsed="true">
+    <Position X="8.5" Y="6.5" Width="1.5" />
+    <NestedTypes>
+      <Delegate Name="Wolfenstein.Common.FastLoop.LoopCallback" Collapsed="true">
+        <TypeIdentifier />
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Wolfenstein.Common.GameException" Collapsed="true">
+    <Position X="14" Y="5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Wolfenstein.Common.GameForm" Collapsed="true">
+    <Position X="12.25" Y="5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Wolfenstein.Common.GameTime" Collapsed="true">
+    <Position X="17.5" Y="4" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Wolfenstein.Common.GDIGraphics" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15.75" Y="4" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Wolfenstein.Common.KeyboardState" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14" Y="4" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Wolfenstein.Common.RandomGenerator" Collapsed="true">
+    <Position X="12.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Wolfenstein.Common.TileMapBuilder" Collapsed="true">
+    <Position X="10.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Wolfenstein.Common.Models.Character" Collapsed="true">
+    <Position X="1" Y="3.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Wolfenstein.Common.Models.Item" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Wolfenstein.Common.Models.Sprite">
+    <Position X="3.25" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Wolfenstein.Game.Environment.Chest" Collapsed="true">
+    <Position X="3.25" Y="3.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <InheritanceLine Type="Wolfenstein.Common.Models.Sprite" ManuallyRouted="true">
+      <Path>
+        <Point X="4" Y="2.247" />
+        <Point X="4" Y="3.458" />
+        <Point X="4" Y="3.458" />
+        <Point X="4" Y="3.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAABAAAAAAACAAAqAAAAA=</HashCode>
+      <FileName>Environment\Chest.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Wolfenstein.Game.Environment.Level" Collapsed="true">
+    <Position X="10.25" Y="5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAQAACAAQAAgBgEgIAAAAIAAAogAAIBMBxABSRAAAQw=</HashCode>
+      <FileName>Environment\Level.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Wolfenstein.Game.Game" Collapsed="true">
+    <Position X="10.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEEAAAAAAAAAgAAAAI=</HashCode>
+      <FileName>Game.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Wolfenstein.Game.GameWindow" Collapsed="true">
+    <Position X="12.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAACAAAACAAAAAAAIAAIAAAAAAAA=</HashCode>
+      <FileName>GameWindow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Wolfenstein.Game.Intro" Collapsed="true">
+    <Position X="8.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAGAAAEAAAgCAAAACAABgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Intro.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Wolfenstein.Game.Program">
+    <Position X="8.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Wolfenstein.Game.Items.Armor" Collapsed="true">
+    <Position X="8.5" Y="2.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAQAAAAAAAAQAAAAAAAAABA=</HashCode>
+      <FileName>Items\Armor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Wolfenstein.Game.Items.Bullet" Collapsed="true">
+    <Position X="10.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEAAAAAAAAAQAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Items\Bullet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Wolfenstein.Game.Items.Gun" Collapsed="true">
+    <Position X="14.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIACAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Items\Gun.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Wolfenstein.Game.Items.ItemDeliveryCompany" Collapsed="true">
+    <Position X="2.75" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAQAAEABgAEAAAACCAAAIAAQAAAAAAAAAAAAAgQA=</HashCode>
+      <FileName>Items\ItemDeliveryCompany.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Wolfenstein.Game.Items.ItemExtraordinaire" Collapsed="true">
+    <Position X="1" Y="9.75" Width="1.5" />
+    <InheritanceLine Type="Wolfenstein.Game.Items.ItemFactory" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="1.688" Y="8.812" />
+        <Point X="1.688" Y="9.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>EAAAAIAAoKAAAAJAEAAAAABAEAAAAAAAgAAAAAAABAA=</HashCode>
+      <FileName>Items\ItemExtraordinaire.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Wolfenstein.Game.Items.ItemFactory" Collapsed="true">
+    <Position X="1" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAIAAAIAgAAAAAAAAAABAEAAAAAAAgAAAAAAABAA=</HashCode>
+      <FileName>Items\ItemFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Wolfenstein.Game.Items.Key" Collapsed="true">
+    <Position X="12.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAQAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Items\Key.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Wolfenstein.Game.Items.MedKit" Collapsed="true">
+    <Position X="16.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Items\MedKit.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Wolfenstein.Game.NPC.Enemy" Collapsed="true">
+    <Position X="1" Y="4.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>CAwkiAAABAwQDgBAAEAABAEBAAAAEAAAADYCkgYAQoI=</HashCode>
+      <FileName>NPC\Enemy.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Wolfenstein.Game.NPC.Guard" Collapsed="true">
+    <Position X="1" Y="6.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>NPC\Guard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Wolfenstein.Game.NPC.Officer" Collapsed="true">
+    <Position X="3.25" Y="6.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>NPC\Officer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Wolfenstein.Game.PC.Hero" Collapsed="true">
+    <Position X="3.5" Y="4.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAaFgABEJYwShgCISGAAqBHAAmQBAAgBMAQikA6KQAA=</HashCode>
+      <FileName>PC\Hero.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Wolfenstein.Game.Environment.Door" Collapsed="true">
+    <Position X="5.5" Y="3.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Environment\Door.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Wolfenstein.Common.Message" Collapsed="true">
+    <Position X="8.25" Y="10.5" Width="1.5" />
+    <TypeIdentifier />
+  </Struct>
+  <Struct Name="Wolfenstein.Common.Structures.Animation" Collapsed="true">
+    <Position X="10.25" Y="10.5" Width="1.5" />
+    <TypeIdentifier />
+  </Struct>
+  <Interface Name="Wolfenstein.Common.Interfaces.IControllerState" Collapsed="true">
+    <Position X="10.25" Y="9.25" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="Wolfenstein.Common.Interfaces.IGraphics" Collapsed="true">
+    <Position X="14" Y="9.25" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="Wolfenstein.Common.Interfaces.ILiving" Collapsed="true">
+    <Position X="12" Y="9.25" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="Wolfenstein.Common.Interfaces.ILootable" Collapsed="true">
+    <Position X="15.75" Y="9.25" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="Wolfenstein.Common.Interfaces.IDrawable" Collapsed="true">
+    <Position X="8.25" Y="9.25" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Enum Name="Wolfenstein.Common.Direction" Collapsed="true">
+    <Position X="14" Y="8" Width="1.5" />
+    <TypeIdentifier />
+  </Enum>
+  <Enum Name="Wolfenstein.Common.ItemRarity" Collapsed="true">
+    <Position X="15.75" Y="8" Width="1.5" />
+    <TypeIdentifier />
+  </Enum>
+  <Enum Name="Wolfenstein.Common.TileType" Collapsed="true">
+    <Position X="17.5" Y="8" Width="1.5" />
+    <TypeIdentifier />
+  </Enum>
+  <Enum Name="Wolfenstein.Common.LevelChangeStatus" Collapsed="true">
+    <Position X="12" Y="8" Width="1.5" />
+    <TypeIdentifier />
+  </Enum>
+  <Enum Name="Wolfenstein.Common.SearchPattern" Collapsed="true">
+    <Position X="8.25" Y="8" Width="1.5" />
+    <TypeIdentifier />
+  </Enum>
+  <Enum Name="Wolfenstein.Common.Ranks" Collapsed="true">
+    <Position X="10.25" Y="8" Width="1.5" />
+    <TypeIdentifier />
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
