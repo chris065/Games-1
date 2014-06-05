@@ -1,3 +1,0 @@
-C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\github\GraphicsGDI+\DrawString\bin\Debug\DrawString.exe.config
-C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\github\GraphicsGDI+\DrawString\obj\Debug\DrawString.exe
-C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\github\GraphicsGDI+\DrawString\obj\Debug\DrawString.pdb

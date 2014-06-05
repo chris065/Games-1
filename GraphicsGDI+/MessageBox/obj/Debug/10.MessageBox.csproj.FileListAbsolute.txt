@@ -1,8 +1,0 @@
-C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\MessageBox\obj\Debug\MessageBox.Properties.Resources.resources
-C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\MessageBox\obj\Debug\10.MessageBox.csproj.GenerateResource.Cache
-C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\MessageBox\bin\Debug\MessageBox.exe.config
-C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\MessageBox\bin\Debug\MessageBox.exe
-C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\MessageBox\bin\Debug\MessageBox.pdb
-C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\MessageBox\obj\Debug\MessageBox.exe
-C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\MessageBox\obj\Debug\MessageBox.pdb
-C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\MessageBox\obj\Debug\MessageBox.Form1.resources

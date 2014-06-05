@@ -1,1 +1,0 @@
-C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\ThreeImages\bin\Debug\ThreeImages.exe.config

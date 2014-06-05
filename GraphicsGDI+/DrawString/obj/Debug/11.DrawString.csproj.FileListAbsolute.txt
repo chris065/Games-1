@@ -1,7 +1,0 @@
-C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\DrawString\bin\Debug\DrawString.exe.config
-C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\DrawString\bin\Debug\DrawString.exe
-C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\DrawString\bin\Debug\DrawString.pdb
-C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\DrawString\obj\Debug\DrawString.Properties.Resources.resources
-C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\DrawString\obj\Debug\11.DrawString.csproj.GenerateResource.Cache
-C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\DrawString\obj\Debug\DrawString.exe
-C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\DrawString\obj\Debug\DrawString.pdb

@@ -1,1 +1,0 @@
-C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\Trash\DoubleBufferGDI+\MessageBox\bin\Debug\MessageBox.exe.config

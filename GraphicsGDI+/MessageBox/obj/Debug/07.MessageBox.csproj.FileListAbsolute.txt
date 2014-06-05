@@ -1,3 +1,0 @@
-C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\github\GraphicsGDI+\MessageBox\bin\Debug\MessageBox.exe.config
-C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\github\GraphicsGDI+\MessageBox\obj\Debug\MessageBox.exe
-C:\Users\JR\Dropbox\TelerikAcademy\_CSharpProjects\github\GraphicsGDI+\MessageBox\obj\Debug\MessageBox.pdb
