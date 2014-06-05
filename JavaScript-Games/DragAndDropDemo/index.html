@@ -4,24 +4,25 @@
 <head></head>
 
 <body>
-    <canvas id="c" width="500" height="500"></canvas>
     <script>
-        var canvas = document.getElementById("c");
-        var c = canvas.getContext("2d");
+        var canvas = document.createElement("canvas");
+        canvas.width = canvas.height = 500;
+        var ctx = canvas.getContext("2d");
+        document.body.appendChild(canvas);
 
-        // var path1 = "images/sticky-note-blue-99.png";
-        // var path2 = "images/sticky-note-red-99.png";
-        
-        var path1 = "http://www.clker.com/cliparts/1/R/Y/D/c/D/sticky-note-blue-folded-corner-th.png";        
+         // var path1 = "images/sticky-note-blue-99.png";
+         // var path2 = "images/sticky-note-red-99.png";
+
+        var path1 = "http://www.clker.com/cliparts/1/R/Y/D/c/D/sticky-note-blue-folded-corner-th.png";
         var path2 = "http://www.clker.com/cliparts/f/9/K/J/r/S/red-labal-th.png";
-        
+
         var image1 = new DragImage(path1, 200, 100);
         var image2 = new DragImage(path2, 300, 100);
 
         var loop = setInterval(function () {
 
-            c.fillStyle = "LightGray";
-            c.fillRect(0, 0, 500, 500);
+            ctx.fillStyle = "LightGray";
+            ctx.fillRect(0, 0, 500, 500);
 
             image1.update();
             image2.update();
@@ -82,7 +83,7 @@
                     that.x = mouseX - startX;
                     that.y = mouseY - startY;
                 }
-                c.drawImage(img, that.x, that.y);
+                ctx.drawImage(img, that.x, that.y);
             }
         }
     </script>
