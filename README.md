@@ -1,2 +1,2 @@
-C# Games
-=====
+Games in C# and JavaScipt
+=========================
