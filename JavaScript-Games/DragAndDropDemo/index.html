@@ -5,49 +5,67 @@
 
 <body>
     <script>
-        var canvas = document.createElement("canvas");
-        canvas.width = canvas.height = 500;
-        var ctx = canvas.getContext("2d");
-        document.body.appendChild(canvas);
+        var canvas, ctx;
+        var image1, image2;
 
-         // var path1 = "images/sticky-note-blue-99.png";
-         // var path2 = "images/sticky-note-red-99.png";
+        var mouseX, mouseY;
+        var mousePressed, dragging;
 
-        var path1 = "http://www.clker.com/cliparts/1/R/Y/D/c/D/sticky-note-blue-folded-corner-th.png";
-        var path2 = "http://www.clker.com/cliparts/f/9/K/J/r/S/red-labal-th.png";
+        window.onload = function main() {
 
-        var image1 = new DragImage(path1, 200, 100);
-        var image2 = new DragImage(path2, 300, 100);
+            canvas = document.createElement("canvas");
+            canvas.width = canvas.height = 500;
+            ctx = canvas.getContext("2d");
+            document.body.appendChild(canvas);
 
-        var loop = setInterval(function () {
+            canvas.addEventListener("mousemove", function (e) {
+                mouseX = e.offsetX;
+                mouseY = e.offsetY;
+                console.log(e.offsetX + ' ' + e.offsetY);
+            });
 
-            ctx.fillStyle = "LightGray";
-            ctx.fillRect(0, 0, 500, 500);
+            canvas.addEventListener("mousedown", function () {
+                mousePressed = true;
+            });
+
+            canvas.addEventListener("mouseup", function () {
+                mousePressed = false;
+                dragging = false;
+            });
+
+            init();
+            loop();
+        }
+
+        function init() {
+            var path1 = "images/sticky-note-blue(50)-99.png";
+            var path2 = "images/sticky-note-red(50)-99.png";
+
+            //var path1 = "http://www.clker.com/cliparts/1/R/Y/D/c/D/sticky-note-blue-folded-corner-th.png";
+            //var path2 = "http://www.clker.com/cliparts/f/9/K/J/r/S/red-labal-th.png";
+
+            image1 = new DraggableImage(path1, 200, 100);
+            image2 = new DraggableImage(path2, 300, 100);
+
+            mouseX = 0;
+            mouseY = 0;
+            mousePressed = false;
+            dragging = false;
+        }
+
+        function loop() {
+
+            ctx.fillStyle = 'rgb(200, 200, 200)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             image1.update();
             image2.update();
-        }, 30);
 
-        var mouseX = 0,
-            mouseY = 0;
-        var mousePressed = false;
-        var dragging = false;
-        canvas.onmousemove = function (e) {
-            mouseX = e.offsetX;
-            mouseY = e.offsetY;
-        };
+            window.requestAnimationFrame(loop);
+        }
 
-        document.onmousedown = function () {
-            mousePressed = true;
-        };
-
-        document.onmouseup = function () {
-            mousePressed = false;
-            dragging = false;
-        };
-
-        function DragImage(src, x, y) {
-            var that = this;
+        function DraggableImage(src, x, y) {
+            var self = this;
             var startX = 0,
                 startY = 0;
             var drag = false;
@@ -59,31 +77,31 @@
             this.update = function () {
                 if (mousePressed) {
 
-                    var left = that.x;
-                    var right = that.x + img.width;
-                    var top = that.y;
-                    var bottom = that.y + img.height;
+                    var left = self.x;
+                    var right = self.x + img.width;
+                    var top = self.y;
+                    var bottom = self.y + img.height;
                     if (!drag) {
-                        startX = mouseX - that.x;
-                        startY = mouseY - that.y;
+                        startX = mouseX - self.x;
+                        startY = mouseY - self.y;
                     }
+
                     if (mouseX < right && mouseX > left && mouseY < bottom && mouseY > top) {
                         if (!dragging) {
                             dragging = true;
                             drag = true;
                         }
-
                     }
 
                 } else {
-
                     drag = false;
                 }
+
                 if (drag) {
-                    that.x = mouseX - startX;
-                    that.y = mouseY - startY;
+                    self.x = mouseX - startX;
+                    self.y = mouseY - startY;
                 }
-                ctx.drawImage(img, that.x, that.y);
+                ctx.drawImage(img, self.x, self.y);
             }
         }
     </script>
