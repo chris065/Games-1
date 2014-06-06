@@ -87,6 +87,9 @@
                     }
                 }
 
+                // mousemove and mouseup event listeners are attached to the whole document window,
+                // because if the user drags the mouse outside of the canvas area while holding the mouse button down,
+                // we still want mouse actions to have an effect.
                 if (dragging) {
                     window.addEventListener("mousemove", mouseMoveListener, false);
                 }
