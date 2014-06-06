@@ -28,7 +28,7 @@
             this.X = posX;
             this.Y = posY;
             this.color = color;
-            this.radius = size / 2;
+            this.size = size;
             this.text = text;
             this.fontSize = +(0.75 * size);
             this.fontFamiliy = "'Calibri'";
@@ -38,16 +38,20 @@
 
          // Checks if the coordinates supplied are inside the tile
         Tile.prototype.isClicked = function (clickX, clickY) {
-            return ((clickX > this.X - this.radius) && (clickX < this.X + this.radius) && (clickY > this.Y - this.radius) && (clickY < this.Y + this.radius));
+            return ((clickX > this.X) && (clickX < this.X + this.size) && (clickY > this.Y) && (clickY < this.Y + this.size));
         };
 
         Tile.prototype.draw = function (context) {
             context.fillStyle = this.color;
-            context.fillRect(this.X - this.radius, this.Y - this.radius, 2 * this.radius, 2 * this.radius);
+            context.fillRect(this.X, this.Y, this.size, this.size);
 
             context.fillStyle = this.fontColor;
             context.font = this.font;
-            context.fillText(this.text, this.X - context.measureText(this.text).width / 2, this.Y + this.fontSize / 4);
+            context.fillText(
+                this.text,
+                this.X + (this.size / 2) - (context.measureText(this.text).width / 2),
+                this.Y + (this.size / 2) + this.fontSize / 4
+            );
         };
 
         function init() {
@@ -78,8 +82,8 @@
 
             tiles = [];
             for (i = 0; i < numTiles; i++) {
-                tempX = boardX + (i % 5) * (size + offest) + (size / 2);
-                tempY = boardY + (~~(i / 5) * (size + offest)) + (size / 2);
+                tempX = boardX + (i % 5) * (size + offest);
+                tempY = boardY + (~~(i / 5) * (size + offest));
 
                 var rand = Math.random();
                 tempColor = rand < 0.33 ? red : rand < 0.66 ? blue : gray;
@@ -158,11 +162,11 @@
 
         function mouseMoveListener(evt) {
             // Updates target position
-            var radius = tiles[tiles.length - 1].radius;
-            var minX = radius;
-            var maxX = canvas.width - radius;
-            var minY = radius;
-            var maxY = canvas.height - radius;
+            var size = tiles[tiles.length - 1].size;
+            var minX = size;
+            var maxX = canvas.width - size;
+            var minY = size;
+            var maxY = canvas.height - size;
 
             var mousePos = getMousePos(canvas, evt);
 
