@@ -30,10 +30,7 @@
                 var i;
                 var tempX, tempY;
                 var tempRad;
-                var r1, g1, b1, color1;
-                var r2, g2, b2, color2;
-                var tempGrad;
-                var gradFactor = 2;
+                var r, g, b, tempColor ;
 
                 shapes = [];
                 for (i = 0; i < numShapes; i++) {
@@ -128,7 +125,7 @@
                 lastShape.X = lastShape.X + easeAmount * (targetPos.X - lastShape.X);
                 lastShape.Y = lastShape.Y + easeAmount * (targetPos.Y - lastShape.Y);
 
-                //stop the timer when the target position is reached (close enough)
+                // Stop the timer when the target position is reached (close enough)
                 if ((!dragging) && (Math.abs(lastShape.X - targetPos.X) < 0.1) && (Math.abs(lastShape.Y - targetPos.Y) < 0.1)) {
                     lastShape.X = targetPos.X;
                     lastShape.Y = targetPos.Y;
@@ -167,6 +164,11 @@
 
                 targetPos.X = posX;
                 targetPos.Y = posY;
+
+                // targetPos.X = mousePos.X ;
+                // targetPos.Y = mousePos.Y;
+
+                console.log(targetPos);
             }
 
             function isInside(shape, mx, my) {
