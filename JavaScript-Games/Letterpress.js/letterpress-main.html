@@ -102,18 +102,17 @@
         function getDragIndex(mouseX, mouseY) {
             var dragIndex = -1;
             // the variable will be overwritten to ensure only the topmost tile is dragged
-            for (i = 0; i < tiles.length; i++)
+            for (var i = 0; i < tiles.length; i++)
                 if (tiles[i].isClicked(mouseX, mouseY))
                     dragIndex = i;
             return dragIndex;
         }
 
         function mouseDownListener(evt) {
-            var i;
-            var dragIndex;
             var mousePos = getMousePos(canvas, evt);
+
             // The index of the tile being clicked or -1 if no tile was clicked
-            dragIndex = getDragIndex(mousePos.X, mousePos.Y);
+            var dragIndex = getDragIndex(mousePos.X, mousePos.Y);
 
             if (dragIndex > -1) {
                 isDragging = true;
