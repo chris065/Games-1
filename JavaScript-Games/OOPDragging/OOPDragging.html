@@ -5,13 +5,14 @@
     <script>
         window.addEventListener("load", canvasApp, false);
 
-        function SquareTile(posX, posY, size) {
+        function SquareTile(value, posX, posY, size) {
             this.initalX = posX;
             this.initalY = posY;
             this.x = posX;
             this.y = posY;
             this.color = "rgb(230, 230, 230)";
             this.radius = size / 2;
+            this.value = value;
         }
 
          // Checks if the coordinates supplied are inside the particle
@@ -73,6 +74,8 @@
                 var boardY = 241;
                 var offest = 1;
 
+                var board = "GMYONIWNXGETSMZWZZLENTEGI";
+
                 for (i = 0; i < numShapes; i++) {
                     //tempX = Math.random() * canvas.width;
                     tempY = Math.random() * canvas.height;
@@ -83,7 +86,7 @@
                     var rand = Math.random();
                     tempColor = rand < 0.33 ? red : rand < 0.66 ? blue : gray;
 
-                    tempShape = new SquareTile(tempX, tempY, size);
+                    tempShape = new SquareTile(board[i], tempX, tempY, size);
                     tempShape.color = tempColor;
                     shapes.push(tempShape);
                 }
@@ -187,6 +190,11 @@
                     //the drawing of the shape is handled by a function inside the external class.
                     //we must pass as an argument the context to which we are drawing the shape.
                     shapes[i].draw(context);
+
+                    context.fillStyle = 'rgb(35, 35, 35)';
+                    context.font = "bold 90px Calibri";
+                    var text = shapes[i].value;
+                    context.fillText(text, shapes[i].x - context.measureText(text).width / 2, shapes[i].y + 90 / 4);
                 }
             }
 
