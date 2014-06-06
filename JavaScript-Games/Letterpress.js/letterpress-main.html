@@ -13,6 +13,14 @@
 
         function main() {
 
+            prepareCanvas();
+            prepareBoard();
+            drawScreen();
+
+            canvas.addEventListener("mousedown", mouseDownListener, false);
+        }
+
+        function prepareCanvas() {
             canvas = document.createElement("canvas");
             canvas.width = 1024;
             canvas.height = 768;
@@ -20,9 +28,13 @@
             canvas.style.left = (document.documentElement.clientWidth - canvas.width) / 2 + 'px';
 
             document.body.appendChild(canvas);
-
             context = canvas.getContext("2d");
-            init();
+        }
+
+        function prepareBoard() {
+            var numTiles = 25;
+            var boardLetters = "GMYONIWNXGETSMZWZZLENTEGI";
+            tiles = makeTiles(numTiles, boardLetters);
         }
 
          // The Tile class
@@ -58,17 +70,6 @@
                 this.Y + (this.size / 2) + this.fontSize / 4
             );
         };
-
-         // Initializes the board
-        function init() {
-            var numTiles = 25;
-            var boardLetters = "GMYONIWNXGETSMZWZZLENTEGI";
-
-            tiles = makeTiles(numTiles, boardLetters);
-
-            drawScreen();
-            canvas.addEventListener("mousedown", mouseDownListener, false);
-        }
 
          // Returns an array of Tile objects
         function makeTiles(numTiles, boardLetters) {
