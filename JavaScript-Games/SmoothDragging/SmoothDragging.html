@@ -14,7 +14,6 @@
 
             init();
 
-            var numShapes;
             var shapes;
             var dragIndex;
             var dragging;
@@ -29,21 +28,21 @@
             var bgColor;
 
             function init() {
-                numShapes = 10;
+                var numShapes = 10;
                 easeAmount = 0.20;
 
                 bgColor = "#000000";
 
                 shapes = [];
 
-                makeShapes();
+                makeShapes(numShapes);
 
                 drawScreen();
 
                 canvas.addEventListener("mousedown", mouseDownListener, false);
             }
 
-            function makeShapes() {
+            function makeShapes(numShapes) {
                 var i;
                 var tempX;
                 var tempY;
@@ -96,7 +95,7 @@
                 mouseY = (evt.clientY - bRect.top) * (canvas.height / bRect.height);
 
                 //find which shape was clicked
-                for (i = 0; i < numShapes; i++) {
+                for (i = 0; i < shapes.length; i++) {
                     if (hitTest(shapes[i], mouseX, mouseY)) {
                         dragging = true;
                         //the following variable will be reset if this loop repeats with another successful hit:
@@ -112,8 +111,8 @@
                     shapes.push(shapes.splice(dragIndex, 1)[0]);
 
                     //shape to drag is now last one in array. We read record the point on this object where the mouse is "holding" it:
-                    dragHoldX = mouseX - shapes[numShapes - 1].x;
-                    dragHoldY = mouseY - shapes[numShapes - 1].y;
+                    dragHoldX = mouseX - shapes[shapes.length - 1].x;
+                    dragHoldY = mouseY - shapes[shapes.length - 1].y;
 
                     //The "target" position is where the object should be if it were to move there instantaneously. But we will
                     //set up the code so that this target position is approached gradually, producing a smooth motion.
@@ -145,13 +144,14 @@
 		The amount to move towards the target position is set in the parameter 'easeAmount', which should range between
 		0 and 1. The target position is set by the mouse position as it is dragging.		
 		*/
-                shapes[numShapes - 1].x = shapes[numShapes - 1].x + easeAmount * (targetX - shapes[numShapes - 1].x);
-                shapes[numShapes - 1].y = shapes[numShapes - 1].y + easeAmount * (targetY - shapes[numShapes - 1].y);
+                var lastShape = shapes[shapes.length - 1];
+                lastShape.x = lastShape.x + easeAmount * (targetX - lastShape.x);
+                lastShape.y = lastShape.y + easeAmount * (targetY - lastShape.y);
 
                 //stop the timer when the target position is reached (close enough)
-                if ((!dragging) && (Math.abs(shapes[numShapes - 1].x - targetX) < 0.1) && (Math.abs(shapes[numShapes - 1].y - targetY) < 0.1)) {
-                    shapes[numShapes - 1].x = targetX;
-                    shapes[numShapes - 1].y = targetY;
+                if ((!dragging) && (Math.abs(lastShape.x - targetX) < 0.1) && (Math.abs(lastShape.y - targetY) < 0.1)) {
+                    lastShape.x = targetX;
+                    lastShape.y = targetY;
                     //stop timer:
                     clearInterval(timer);
                 }
@@ -170,7 +170,7 @@
             function mouseMoveListener(evt) {
                 var posX;
                 var posY;
-                var shapeRad = shapes[numShapes - 1].rad;
+                var shapeRad = shapes[shapes.length - 1].rad;
                 var minX = shapeRad;
                 var maxX = canvas.width - shapeRad;
                 var minY = shapeRad;
@@ -206,7 +206,7 @@
                 var x;
                 var y;
                 var rad;
-                for (i = 0; i < numShapes; i++) {
+                for (i = 0; i < shapes.length; i++) {
                     //define gradient
                     rad = shapes[i].rad;
                     x = shapes[i].x;
