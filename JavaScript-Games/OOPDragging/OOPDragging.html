@@ -3,7 +3,7 @@
 
 <head>
     <script>
-        window.addEventListener("load", canvasApp, false);
+        window.addEventListener("load", main, false);
 
         function Tile(text, posX, posY, size) {
             this.initalX = posX;
@@ -15,11 +15,11 @@
             this.text = text;
             this.fontSize = +(0.75 * size);
             this.fontFamiliy = "Calibri";
-            this.font = "bold " + this.fontSize + "px " + this.fontFamiliy;
             this.fontColor = 'rgb(35, 35, 35)';
+            this.font = "bold " + this.fontSize + "px " + this.fontFamiliy;
         }
 
-         // Checks if the coordinates supplied are inside the particle
+         // Checks if the coordinates supplied are inside the tile
         Tile.prototype.isNear = function (clickX, clickY) {
             return ((clickX > this.x - this.radius) && (clickX < this.x + this.radius) && (clickY > this.y - this.radius) && (clickY < this.y + this.radius));
         };
@@ -33,7 +33,7 @@
             context.fillText(this.text, this.x - context.measureText(this.text).width / 2, this.y + this.fontSize / 4);
         };
 
-        function canvasApp() {
+        function main() {
 
             var canvas = document.createElement("canvas");
             canvas.width = 1024;
@@ -43,36 +43,27 @@
 
             init();
 
-            var numShapes;
             var tiles;
-            var dragIndex;
-            var dragging;
-            var mouseX;
-            var mouseY;
-            var dragHoldX;
-            var dragHoldY;
+            var dragIndex, isDragging;
+            var mouseX, mouseY;
+            var dragHoldX, dragHoldY;
             var timer;
-            var targetX;
-            var targetY;
-            var easeAmount;
+            var targetX, targetY;
 
             function init() {
-                numShapes = 25;
-                easeAmount = 0.2;
+                var numTiles = 25;
+                var boardLetters = "GMYONIWNXGETSMZWZZLENTEGI";
 
-                tiles = [];
-
-                makeTiles();
+                tiles = makeTiles(numTiles, boardLetters);
 
                 drawScreen();
 
                 canvas.addEventListener("mousedown", mouseDownListener, false);
             }
 
-            function makeTiles() {
+            function makeTiles(numTiles, boardLetters) {
                 var i;
-                var tempX;
-                var tempY;
+                var tempX, tempY;
                 var tempColor;
                 var red = "rgb(247,153,141)";
                 var blue = "rgb(120,200,245)";
@@ -83,9 +74,9 @@
 
                 boardX = (canvas.width - 5 * (size + offest)) / 2;
                 boardY = (canvas.height - 5 * (size + offest)) - size / 10;
-                var boardLetters = "GMYONIWNXGETSMZWZZLENTEGI";
 
-                for (i = 0; i < numShapes; i++) {
+                tiles = [];
+                for (i = 0; i < numTiles; i++) {
                     tempX = boardX + (i % 5) * (size + offest) + (size / 2);
                     tempY = boardY + (~~(i / 5) * (size + offest)) + (size / 2);
 
@@ -96,6 +87,8 @@
                     tempShape.color = tempColor;
                     tiles.push(tempShape);
                 }
+
+                return tiles;
             }
 
             function mouseDownListener(evt) {
@@ -107,23 +100,23 @@
                 mouseY = (evt.clientY - bRect.top) * (canvas.height / bRect.height);
 
                 // Find if a shape was clicked. 
-                for (i = 0; i < numShapes; i++) {
+                for (i = 0; i < tiles.length; i++) {
                     if (tiles[i].isNear(mouseX, mouseY)) {
-                        dragging = true;
+                        isDragging = true;
                         //the following variable will be reset if this loop repeats with another successful hit:
                         dragIndex = i;
                     }
                 }
 
-                if (dragging) {
+                if (isDragging) {
                     window.addEventListener("mousemove", mouseMoveListener, false);
 
                     //place currently dragged shape on top
                     tiles.push(tiles.splice(dragIndex, 1)[0]);
 
                     //shapeto drag is now last one in array
-                    dragHoldX = mouseX - tiles[numShapes - 1].x;
-                    dragHoldY = mouseY - tiles[numShapes - 1].y;
+                    dragHoldX = mouseX - tiles[tiles.length - 1].x;
+                    dragHoldY = mouseY - tiles[tiles.length - 1].y;
 
                     //The "target" position is where the object should be if it were to move there instantaneously. But we will
                     //set up the code so that this target position is approached gradually, producing a smooth motion.
@@ -141,14 +134,16 @@
             }
 
             function onTimerTick() {
+                var easeAmount = 0.2;
                 //because of reordering, the dragging shape is the last one in the array.
-                tiles[numShapes - 1].x = tiles[numShapes - 1].x + easeAmount * (targetX - tiles[numShapes - 1].x);
-                tiles[numShapes - 1].y = tiles[numShapes - 1].y + easeAmount * (targetY - tiles[numShapes - 1].y);
+                var topTile = tiles[tiles.length - 1];
+                topTile.x = topTile.x + easeAmount * (targetX - topTile.x);
+                topTile.y = topTile.y + easeAmount * (targetY - topTile.y);
 
                 //stop the timer when the target position is reached (close enough)
-                if ((!dragging) && (Math.abs(tiles[numShapes - 1].x - targetX) < 0.1) && (Math.abs(tiles[numShapes - 1].y - targetY) < 0.1)) {
-                    tiles[numShapes - 1].x = targetX;
-                    tiles[numShapes - 1].y = targetY;
+                if ((!isDragging) && (Math.abs(topTile.x - targetX) < 0.1) && (Math.abs(topTile.y - targetY) < 0.1)) {
+                    topTile.x = targetX;
+                    topTile.y = targetY;
                     //stop timer:
                     clearInterval(timer);
                 }
@@ -158,10 +153,10 @@
             function mouseUpListener(evt) {
                 canvas.addEventListener("mousedown", mouseDownListener, false);
                 window.removeEventListener("mouseup", mouseUpListener, false);
-                if (dragging) {
-                    dragging = false;
-                    targetX = tiles[numShapes - 1].initalX;
-                    targetY = tiles[numShapes - 1].initalY;
+                if (isDragging) {
+                    isDragging = false;
+                    targetX = tiles[tiles.length - 1].initalX;
+                    targetY = tiles[tiles.length - 1].initalY;
                     window.removeEventListener("mousemove", mouseMoveListener, false);
                 }
             }
@@ -169,7 +164,7 @@
             function mouseMoveListener(evt) {
                 var posX;
                 var posY;
-                var shapeRad = tiles[numShapes - 1].radius;
+                var shapeRad = tiles[tiles.length - 1].radius;
                 var minX = shapeRad;
                 var maxX = canvas.width - shapeRad;
                 var minY = shapeRad;
@@ -192,7 +187,7 @@
 
             function drawShapes() {
                 var i;
-                for (i = 0; i < numShapes; i++) {
+                for (i = 0; i < tiles.length; i++) {
                     //the drawing of the shape is handled by a function inside the external class.
                     //we must pass as an argument the context to which we are drawing the shape.
                     tiles[i].draw(context);
