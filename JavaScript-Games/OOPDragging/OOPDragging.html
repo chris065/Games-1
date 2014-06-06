@@ -5,24 +5,32 @@
     <script>
         window.addEventListener("load", canvasApp, false);
 
-        function SquareTile(value, posX, posY, size) {
+        function Tile(text, posX, posY, size) {
             this.initalX = posX;
             this.initalY = posY;
             this.x = posX;
             this.y = posY;
-            this.color = "rgb(230, 230, 230)";
+            this.color = "rgb(230, 230, 230)"; // default gray
             this.radius = size / 2;
-            this.value = value;
+            this.text = text;
+            this.fontSize = +(0.75 * size);
+            this.fontFamiliy = "Calibri";
+            this.font = "bold " + this.fontSize + "px " + this.fontFamiliy;
+            this.fontColor = 'rgb(35, 35, 35)';
         }
 
          // Checks if the coordinates supplied are inside the particle
-        SquareTile.prototype.isNear = function (clickX, clickY) {
+        Tile.prototype.isNear = function (clickX, clickY) {
             return ((clickX > this.x - this.radius) && (clickX < this.x + this.radius) && (clickY > this.y - this.radius) && (clickY < this.y + this.radius));
         };
 
-        SquareTile.prototype.draw = function (context) {
+        Tile.prototype.draw = function (context) {
             context.fillStyle = this.color;
             context.fillRect(this.x - this.radius, this.y - this.radius, 2 * this.radius, 2 * this.radius);
+
+            context.fillStyle = this.fontColor;
+            context.font = this.font;
+            context.fillText(this.text, this.x - context.measureText(this.text).width / 2, this.y + this.fontSize / 4);
         };
 
         function canvasApp() {
@@ -36,7 +44,7 @@
             init();
 
             var numShapes;
-            var shapes;
+            var tiles;
             var dragIndex;
             var dragging;
             var mouseX;
@@ -52,16 +60,16 @@
                 numShapes = 25;
                 easeAmount = 0.2;
 
-                shapes = [];
+                tiles = [];
 
-                makeShapes();
+                makeTiles();
 
                 drawScreen();
 
                 canvas.addEventListener("mousedown", mouseDownListener, false);
             }
 
-            function makeShapes() {
+            function makeTiles() {
                 var i;
                 var tempX;
                 var tempY;
@@ -69,26 +77,24 @@
                 var red = "rgb(247,153,141)";
                 var blue = "rgb(120,200,245)";
                 var gray = "rgb(230, 230, 230)";
-                var size = 114;
-                var boardX = 285;
-                var boardY = 241;
-                var offest = 1;
+                var size = 114; // pixels
+                var boardX, boardY;
+                var offest = 1; // pixels
 
-                var board = "GMYONIWNXGETSMZWZZLENTEGI";
+                boardX = (canvas.width - 5 * (size + offest)) / 2;
+                boardY = (canvas.height - 5 * (size + offest)) - size / 10;
+                var boardLetters = "GMYONIWNXGETSMZWZZLENTEGI";
 
                 for (i = 0; i < numShapes; i++) {
-                    //tempX = Math.random() * canvas.width;
-                    tempY = Math.random() * canvas.height;
-
-                    tempX = boardX + (i % 5) * (size + offest);
-                    tempY = boardY + (~~(i / 5) * (size + offest));
+                    tempX = boardX + (i % 5) * (size + offest) + (size / 2);
+                    tempY = boardY + (~~(i / 5) * (size + offest)) + (size / 2);
 
                     var rand = Math.random();
                     tempColor = rand < 0.33 ? red : rand < 0.66 ? blue : gray;
 
-                    tempShape = new SquareTile(board[i], tempX, tempY, size);
+                    tempShape = new Tile(boardLetters[i], tempX, tempY, size);
                     tempShape.color = tempColor;
-                    shapes.push(tempShape);
+                    tiles.push(tempShape);
                 }
             }
 
@@ -102,7 +108,7 @@
 
                 // Find if a shape was clicked. 
                 for (i = 0; i < numShapes; i++) {
-                    if (shapes[i].isNear(mouseX, mouseY)) {
+                    if (tiles[i].isNear(mouseX, mouseY)) {
                         dragging = true;
                         //the following variable will be reset if this loop repeats with another successful hit:
                         dragIndex = i;
@@ -113,11 +119,11 @@
                     window.addEventListener("mousemove", mouseMoveListener, false);
 
                     //place currently dragged shape on top
-                    shapes.push(shapes.splice(dragIndex, 1)[0]);
+                    tiles.push(tiles.splice(dragIndex, 1)[0]);
 
                     //shapeto drag is now last one in array
-                    dragHoldX = mouseX - shapes[numShapes - 1].x;
-                    dragHoldY = mouseY - shapes[numShapes - 1].y;
+                    dragHoldX = mouseX - tiles[numShapes - 1].x;
+                    dragHoldY = mouseY - tiles[numShapes - 1].y;
 
                     //The "target" position is where the object should be if it were to move there instantaneously. But we will
                     //set up the code so that this target position is approached gradually, producing a smooth motion.
@@ -136,13 +142,13 @@
 
             function onTimerTick() {
                 //because of reordering, the dragging shape is the last one in the array.
-                shapes[numShapes - 1].x = shapes[numShapes - 1].x + easeAmount * (targetX - shapes[numShapes - 1].x);
-                shapes[numShapes - 1].y = shapes[numShapes - 1].y + easeAmount * (targetY - shapes[numShapes - 1].y);
+                tiles[numShapes - 1].x = tiles[numShapes - 1].x + easeAmount * (targetX - tiles[numShapes - 1].x);
+                tiles[numShapes - 1].y = tiles[numShapes - 1].y + easeAmount * (targetY - tiles[numShapes - 1].y);
 
                 //stop the timer when the target position is reached (close enough)
-                if ((!dragging) && (Math.abs(shapes[numShapes - 1].x - targetX) < 0.1) && (Math.abs(shapes[numShapes - 1].y - targetY) < 0.1)) {
-                    shapes[numShapes - 1].x = targetX;
-                    shapes[numShapes - 1].y = targetY;
+                if ((!dragging) && (Math.abs(tiles[numShapes - 1].x - targetX) < 0.1) && (Math.abs(tiles[numShapes - 1].y - targetY) < 0.1)) {
+                    tiles[numShapes - 1].x = targetX;
+                    tiles[numShapes - 1].y = targetY;
                     //stop timer:
                     clearInterval(timer);
                 }
@@ -154,8 +160,8 @@
                 window.removeEventListener("mouseup", mouseUpListener, false);
                 if (dragging) {
                     dragging = false;
-                    targetX = shapes[numShapes - 1].initalX;
-                    targetY = shapes[numShapes - 1].initalY;
+                    targetX = tiles[numShapes - 1].initalX;
+                    targetY = tiles[numShapes - 1].initalY;
                     window.removeEventListener("mousemove", mouseMoveListener, false);
                 }
             }
@@ -163,7 +169,7 @@
             function mouseMoveListener(evt) {
                 var posX;
                 var posY;
-                var shapeRad = shapes[numShapes - 1].radius;
+                var shapeRad = tiles[numShapes - 1].radius;
                 var minX = shapeRad;
                 var maxX = canvas.width - shapeRad;
                 var minY = shapeRad;
@@ -189,12 +195,7 @@
                 for (i = 0; i < numShapes; i++) {
                     //the drawing of the shape is handled by a function inside the external class.
                     //we must pass as an argument the context to which we are drawing the shape.
-                    shapes[i].draw(context);
-
-                    context.fillStyle = 'rgb(35, 35, 35)';
-                    context.font = "bold 90px Calibri";
-                    var text = shapes[i].value;
-                    context.fillText(text, shapes[i].x - context.measureText(text).width / 2, shapes[i].y + 90 / 4);
+                    tiles[i].draw(context);
                 }
             }
 
