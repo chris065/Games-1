@@ -30,11 +30,11 @@
                 var i;
                 var tempX, tempY;
                 var tempRad;
-                var r, g, b, tempColor ;
+                var r, g, b, tempColor;
 
                 shapes = [];
                 for (i = 0; i < numShapes; i++) {
-                	// random radius
+                    // random radius
                     tempRad = 5 + Math.floor(Math.random() * 20);
                     // random position
                     tempX = Math.random() * (canvas.width - tempRad);
@@ -88,14 +88,14 @@
                     // Shape to drag is now last one in array. We record the point on this object where the mouse is "holding" it:            
                     dragPos = {
                         X: mousePos.X - shapes[shapes.length - 1].X,
-                        Y: mousePos.Y - shapes[shapes.length - 1].Y
+                        Y: mousePos.Y - shapes[shapes.length - 1].Y,
                     };
 
                     // The "target" position is where the object should be if it were to move there instantaneously. But we will
                     // set up the code so that this target position is approached gradually, producing a smooth motion.        
                     targetPos = {
                         X: mousePos.X - dragPos.X,
-                        Y: mousePos.Y - dragPos.Y
+                        Y: mousePos.Y - dragPos.Y,
                     };
 
                     // Start timer
@@ -106,13 +106,7 @@
                 window.addEventListener("mouseup", mouseUpListener, false);
 
                 //code below prevents the mouse down from having an effect on the main browser window:
-                if (evt.preventDefault) {
-                    evt.preventDefault();
-                } //standard
-                else if (evt.returnValue) {
-                    evt.returnValue = false;
-                } //older IE
-                return false;
+                evt.preventDefault();
             }
 
             function onTimerTick() {
@@ -146,29 +140,17 @@
 
             function mouseMoveListener(evt) {
                 // Updates target position
-                var posX;
-                var posY;
                 var shapeRad = shapes[shapes.length - 1].rad;
                 var minX = shapeRad;
                 var maxX = canvas.width - shapeRad;
                 var minY = shapeRad;
                 var maxY = canvas.height - shapeRad;
-                //getting mouse position correctly 
+ 
                 mousePos = getMousePos(canvas, evt);
 
                 //clamp x and y positions to prevent object from dragging outside of canvas
-                posX = mousePos.X - dragPos.X;
-                posX = (posX < minX) ? minX : ((posX > maxX) ? maxX : posX);
-                posY = mousePos.Y - dragPos.Y;
-                posY = (posY < minY) ? minY : ((posY > maxY) ? maxY : posY);
-
-                targetPos.X = posX;
-                targetPos.Y = posY;
-
-                // targetPos.X = mousePos.X ;
-                // targetPos.Y = mousePos.Y;
-
-                console.log(targetPos);
+				targetPos.X = Math.min(Math.max(mousePos.X - dragPos.X, minX), maxX);
+				targetPos.Y = Math.min(Math.max(mousePos.Y - dragPos.Y, minY), maxY);
             }
 
             function isInside(shape, mx, my) {
