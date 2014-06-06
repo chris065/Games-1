@@ -74,21 +74,21 @@
             var darkRed = "rgb(255, 67, 47)";
             var darkBlue = "rgb(0, 162, 255)";
 
-            var size = 114; // pixels
-            var offest = 1; // pixels
+            var tileSize = 114; // pixels
+            var tileMargin = 1; // pixels
 
-            boardX = (canvas.width - 5 * (size + offest)) / 2;
-            boardY = (canvas.height - 5 * (size + offest)) - size / 10;
+            boardX = (canvas.width - 5 * (tileSize + tileMargin)) / 2;
+            boardY = (canvas.height - 5 * (tileSize + tileMargin)) - tileSize / 10;
 
             tiles = [];
             for (i = 0; i < numTiles; i++) {
-                tempX = boardX + (i % 5) * (size + offest);
-                tempY = boardY + (~~(i / 5) * (size + offest));
+                tempX = boardX + (i % 5) * (tileSize + tileMargin);
+                tempY = boardY + (~~(i / 5) * (tileSize + tileMargin));
 
                 var rand = Math.random();
                 tempColor = rand < 0.33 ? red : rand < 0.66 ? blue : gray;
 
-                tiles.push(new Tile(boardLetters[i], tempColor, tempX, tempY, size));
+                tiles.push(new Tile(boardLetters[i], tempColor, tempX, tempY, tileSize));
             }
 
             return tiles;
