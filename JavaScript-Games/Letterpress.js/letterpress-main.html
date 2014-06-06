@@ -37,6 +37,15 @@
             tiles = makeTiles(numTiles, boardLetters);
         }
 
+         // Renders the canvas to screen
+        function drawScreen() {
+            context.fillStyle = 'rgb(240, 239, 236)';
+            context.fillRect(0, 0, canvas.width, canvas.height);
+
+            for (var i = 0; i < tiles.length; i++)
+                tiles[i].draw(context);
+        }
+
          // The Tile class
         function Tile(text, color, posX, posY, size) {
             this.initalX = posX;
@@ -169,11 +178,10 @@
 
         function mouseMoveListener(evt) {
             // Updates target position
-            var size = dragTile.size;
-            var minX = size;
-            var maxX = canvas.width - size;
-            var minY = size;
-            var maxY = canvas.height - size;
+            var minX = 0;
+            var maxX = canvas.width - dragTile.size;
+            var minY = 0;
+            var maxY = canvas.height - dragTile.size;
 
             var mousePos = getMousePos(canvas, evt);
 
@@ -198,15 +206,6 @@
                 clearInterval(timer);
             }
             drawScreen();
-        }
-
-         // Renders the canvas to screen
-        function drawScreen() {
-            context.fillStyle = 'rgb(240, 239, 236)';
-            context.fillRect(0, 0, canvas.width, canvas.height);
-
-            for (var i = 0; i < tiles.length; i++)
-                tiles[i].draw(context);
         }
     </script>
 
