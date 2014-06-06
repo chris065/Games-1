@@ -8,7 +8,7 @@
         var canvas, context;
         var tiles;
         var isDragging;
-        var mousePos, targetPos, dragPos;
+        var targetPos, dragOffset;
         var timer;
 
         function main() {
@@ -111,7 +111,7 @@
         function mouseDownListener(evt) {
             var i;
             var dragIndex;
-            mousePos = getMousePos(canvas, evt);
+            var mousePos = getMousePos(canvas, evt);
             // The index of the tile being clicked or -1 if no tile was clicked
             dragIndex = getDragIndex(mousePos.X, mousePos.Y);
 
@@ -123,7 +123,7 @@
                 tiles.push(tiles.splice(dragIndex, 1)[0]);
 
                 // We record the point on the dragged tile where the mouse is "holding" it:          
-                dragPos = {
+                dragOffset = {
                     X: mousePos.X - tiles[tiles.length - 1].X,
                     Y: mousePos.Y - tiles[tiles.length - 1].Y,
                 };
@@ -131,8 +131,8 @@
                 // The "target" position is where the object should be if it were to move there instantaneously. But we will
                 // set up the code so that this target position is approached gradually, producing a smooth motion. 
                 targetPos = {
-                    X: mousePos.X - dragPos.X,
-                    Y: mousePos.Y - dragPos.Y,
+                    X: mousePos.X - dragOffset.X,
+                    Y: mousePos.Y - dragOffset.Y,
                 };
 
                 // Start timer
@@ -143,24 +143,6 @@
 
             // Prevents the mouse down from having an effect on the main browser window:
             evt.preventDefault();
-        }
-
-        function onTimerTick() {
-            var easeAmount = 0.2;
-            // The moving shape is the last in the array
-            var topTile = tiles[tiles.length - 1];
-            topTile.X = topTile.X + easeAmount * (targetPos.X - topTile.X);
-            topTile.Y = topTile.Y + easeAmount * (targetPos.Y - topTile.Y);
-
-            // Stop the timer when the target position is reached (close enough)
-            if ((!isDragging) && (Math.abs(topTile.X - targetPos.X) < 0.1) && (Math.abs(topTile.Y - targetPos.Y) < 0.1)) {
-                // Snap the tile to its final position
-                topTile.X = targetPos.X;
-                topTile.Y = targetPos.Y;
-                // Stop timer:
-                clearInterval(timer);
-            }
-            drawScreen();
         }
 
         function mouseUpListener(evt) {
@@ -183,11 +165,29 @@
             var minY = radius;
             var maxY = canvas.height - radius;
 
-            mousePos = getMousePos(canvas, evt);
+            var mousePos = getMousePos(canvas, evt);
 
             // Clamp x and y positions to prevent object from dragging outside of canvas
-            targetPos.X = Math.min(Math.max(mousePos.X - dragPos.X, minX), maxX);
-            targetPos.Y = Math.min(Math.max(mousePos.Y - dragPos.Y, minY), maxY);
+            targetPos.X = Math.min(Math.max(mousePos.X - dragOffset.X, minX), maxX);
+            targetPos.Y = Math.min(Math.max(mousePos.Y - dragOffset.Y, minY), maxY);
+        }
+
+        function onTimerTick() {
+            var easeAmount = 0.2;
+            // The moving shape is the last in the array
+            var topTile = tiles[tiles.length - 1];
+            topTile.X = topTile.X + easeAmount * (targetPos.X - topTile.X);
+            topTile.Y = topTile.Y + easeAmount * (targetPos.Y - topTile.Y);
+
+            // Stop the timer when the target position is reached (close enough)
+            if ((!isDragging) && (Math.abs(topTile.X - targetPos.X) < 0.1) && (Math.abs(topTile.Y - targetPos.Y) < 0.1)) {
+                // Snap the tile to its final position
+                topTile.X = targetPos.X;
+                topTile.Y = targetPos.Y;
+                // Stop timer:
+                clearInterval(timer);
+            }
+            drawScreen();
         }
 
         function drawScreen() {
