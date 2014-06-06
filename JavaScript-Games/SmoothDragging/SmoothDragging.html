@@ -17,9 +17,9 @@
             var shapes;
             var dragIndex, dragging;
             var dragHoldX, dragHoldY;
-            var targetX, targetY;
             var timer;
             var mousePos;
+            var targetPos;
 
             function init() {
                 var numShapes = 10;
@@ -72,8 +72,8 @@
             function getMousePos(canvas, evt) {
                 var bRect = canvas.getBoundingClientRect();
                 return {
-                    X: (evt.clientX - bRect.left) * (canvas.width / bRect.width),
-                    Y: (evt.clientY - bRect.top) * (canvas.height / bRect.height)
+                    x: (evt.clientX - bRect.left) * (canvas.width / bRect.width),
+                    y: (evt.clientY - bRect.top) * (canvas.height / bRect.height)
                 };
             }
 
@@ -83,9 +83,10 @@
 
                 //find which shape was clicked
                 for (i = 0; i < shapes.length; i++) {
-                    if (isInside(shapes[i], mousePos.X, mousePos.Y)) {
+                    if (isInside(shapes[i], mousePos.x, mousePos.y)) {
                         dragging = true;
-                        //the following variable will be reset if this loop repeats with another successful hit:
+                        // the next variable will be overwritten if the loop finds another successful hit,
+                        // to ensure only the topmost shape is dragged
                         dragIndex = i;
                     }
                 }
@@ -93,18 +94,19 @@
                 if (dragging) {
                     window.addEventListener("mousemove", mouseMoveListener, false);
 
-                    //We now place the currently dragged shape on top by reordering the array which holds these objects.
-                    //We 'splice' out this array element, then 'push' it back into the array at the end.
+                    // We now place the currently dragged shape on top by placing it last in the array.
                     shapes.push(shapes.splice(dragIndex, 1)[0]);
 
-                    //shape to drag is now last one in array. We read record the point on this object where the mouse is "holding" it:
-                    dragHoldX = mousePos.X - shapes[shapes.length - 1].x;
-                    dragHoldY = mousePos.Y - shapes[shapes.length - 1].y;
+                    //shape to drag is now last one in array. We record the point on this object where the mouse is "holding" it:
+                    dragHoldX = mousePos.x - shapes[shapes.length - 1].x;
+                    dragHoldY = mousePos.y - shapes[shapes.length - 1].y;
 
-                    //The "target" position is where the object should be if it were to move there instantaneously. But we will
-                    //set up the code so that this target position is approached gradually, producing a smooth motion.
-                    targetX = mousePos.X - dragHoldX;
-                    targetY = mousePos.Y - dragHoldY;
+                    // The "target" position is where the object should be if it were to move there instantaneously. But we will
+                    // set up the code so that this target position is approached gradually, producing a smooth motion.        
+                    targetPos = {
+                        x: mousePos.x - dragHoldX,
+                        y: mousePos.y - dragHoldY
+                    };
 
                     //start timer
                     timer = setInterval(onTimerTick, 1000 / 30);
@@ -123,23 +125,19 @@
             }
 
             function onTimerTick() {
-                /*
-		Because of reordering, the dragging shape is the last one in the array.
-		The code below moves this shape only a portion of the distance towards the current "target" position, and 
-		because this code is being executed inside a function called by a timer, the object will continue to
-		move closer and closer to the target position.
-		The amount to move towards the target position is set in the parameter 'easeAmount', which should range between
-		0 and 1. The target position is set by the mouse position as it is dragging.		
-		*/
+
+                // The amount to move towards the target position (between 0 and 1).
                 var easeAmount = 0.20;
+                // The moving shape which is the last in the array
                 var lastShape = shapes[shapes.length - 1];
-                lastShape.x = lastShape.x + easeAmount * (targetX - lastShape.x);
-                lastShape.y = lastShape.y + easeAmount * (targetY - lastShape.y);
+                // The target position is set by the mouse position as it is dragging.
+                lastShape.x = lastShape.x + easeAmount * (targetPos.x - lastShape.x);
+                lastShape.y = lastShape.y + easeAmount * (targetPos.y - lastShape.y);
 
                 //stop the timer when the target position is reached (close enough)
-                if ((!dragging) && (Math.abs(lastShape.x - targetX) < 0.1) && (Math.abs(lastShape.y - targetY) < 0.1)) {
-                    lastShape.x = targetX;
-                    lastShape.y = targetY;
+                if ((!dragging) && (Math.abs(lastShape.x - targetPos.x) < 0.1) && (Math.abs(lastShape.y - targetPos.y) < 0.1)) {
+                    lastShape.x = targetPos.x;
+                    lastShape.y = targetPos.y;
                     //stop timer:
                     clearInterval(timer);
                 }
@@ -167,13 +165,13 @@
                 mousePos = getMousePos(canvas, evt);
 
                 //clamp x and y positions to prevent object from dragging outside of canvas
-                posX = mousePos.X - dragHoldX;
+                posX = mousePos.x - dragHoldX;
                 posX = (posX < minX) ? minX : ((posX > maxX) ? maxX : posX);
-                posY = mousePos.Y - dragHoldY;
+                posY = mousePos.y - dragHoldY;
                 posY = (posY < minY) ? minY : ((posY > maxY) ? maxY : posY);
 
-                targetX = posX;
-                targetY = posY;
+                targetPos.x = posX;
+                targetPos.y = posY;
             }
 
             function isInside(shape, mx, my) {
@@ -207,11 +205,9 @@
             }
 
             function drawScreen() {
-                //bg
                 var bgColor = "#000000";
                 context.fillStyle = bgColor;
                 context.fillRect(0, 0, canvas.width, canvas.height);
-
                 drawShapes();
             }
         }
