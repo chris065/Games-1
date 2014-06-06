@@ -194,7 +194,7 @@
         function onTimerTick() {
             // The next variable controls the lag in the tile movement (from 0 to 1)
             var easeAmount = 0.2;
-            // The moving tile is the last in the array
+            // Update the moving tile position
             dragTile.X += easeAmount * (dragTile.targetPosX - dragTile.X);
             dragTile.Y += easeAmount * (dragTile.targetPosY - dragTile.Y);
 
