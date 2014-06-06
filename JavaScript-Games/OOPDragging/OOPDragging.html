@@ -6,6 +6,8 @@
         window.addEventListener("load", canvasApp, false);
 
         function SquareTile(posX, posY, size) {
+            this.initalX = posX;
+            this.initalY = posY;
             this.x = posX;
             this.y = posY;
             this.color = "rgb(230, 230, 230)";
@@ -25,7 +27,8 @@
         function canvasApp() {
 
             var canvas = document.createElement("canvas");
-            canvas.width = canvas.height = 500;
+            canvas.width = 1024;
+            canvas.height = 768;
             var context = canvas.getContext("2d");
             document.body.appendChild(canvas);
 
@@ -64,12 +67,21 @@
                 var tempColor;
                 var red = "rgb(247,153,141)";
                 var blue = "rgb(120,200,245)";
-                var size = 80;
+                var gray = "rgb(230, 230, 230)";
+                var size = 114;
+                var boardX = 285;
+                var boardY = 241;
+                var offest = 1;
 
                 for (i = 0; i < numShapes; i++) {
-                    tempX = Math.random() * canvas.width;
+                    //tempX = Math.random() * canvas.width;
                     tempY = Math.random() * canvas.height;
-                    tempColor = Math.random() < 0.5 ? red : blue;
+
+                    tempX = boardX + (i % 5) * (size + offest);
+                    tempY = boardY + (~~(i / 5) * (size + offest));
+
+                    var rand = Math.random();
+                    tempColor = rand < 0.33 ? red : rand < 0.66 ? blue : gray;
 
                     tempShape = new SquareTile(tempX, tempY, size);
                     tempShape.color = tempColor;
@@ -139,6 +151,8 @@
                 window.removeEventListener("mouseup", mouseUpListener, false);
                 if (dragging) {
                     dragging = false;
+                    targetX = shapes[numShapes - 1].initalX;
+                    targetY = shapes[numShapes - 1].initalY;
                     window.removeEventListener("mousemove", mouseMoveListener, false);
                 }
             }
@@ -177,8 +191,7 @@
             }
 
             function drawScreen() {
-                //bg
-                context.fillStyle = "#e0e0e0";
+                context.fillStyle = 'rgb(240, 239, 236)';
                 context.fillRect(0, 0, canvas.width, canvas.height);
 
                 drawShapes();
