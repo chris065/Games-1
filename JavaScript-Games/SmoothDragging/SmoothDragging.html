@@ -16,10 +16,10 @@
 
             var shapes;
             var dragIndex, dragging;
-            var mouseX, mouseY;
             var dragHoldX, dragHoldY;
             var targetX, targetY;
             var timer;
+            var mousePos;
 
             function init() {
                 var numShapes = 10;
@@ -69,17 +69,21 @@
                 return shapes;
             }
 
+            function getMousePos(canvas, evt) {
+                var bRect = canvas.getBoundingClientRect();
+                return {
+                    X: (evt.clientX - bRect.left) * (canvas.width / bRect.width),
+                    Y: (evt.clientY - bRect.top) * (canvas.height / bRect.height)
+                };
+            }
+
             function mouseDownListener(evt) {
                 var i;
-
-                //getting mouse position correctly 
-                var bRect = canvas.getBoundingClientRect();
-                mouseX = (evt.clientX - bRect.left) * (canvas.width / bRect.width);
-                mouseY = (evt.clientY - bRect.top) * (canvas.height / bRect.height);
+                mousePos = getMousePos(canvas, evt);
 
                 //find which shape was clicked
                 for (i = 0; i < shapes.length; i++) {
-                    if (hitTest(shapes[i], mouseX, mouseY)) {
+                    if (isInside(shapes[i], mousePos.X, mousePos.Y)) {
                         dragging = true;
                         //the following variable will be reset if this loop repeats with another successful hit:
                         dragIndex = i;
@@ -94,13 +98,13 @@
                     shapes.push(shapes.splice(dragIndex, 1)[0]);
 
                     //shape to drag is now last one in array. We read record the point on this object where the mouse is "holding" it:
-                    dragHoldX = mouseX - shapes[shapes.length - 1].x;
-                    dragHoldY = mouseY - shapes[shapes.length - 1].y;
+                    dragHoldX = mousePos.X - shapes[shapes.length - 1].x;
+                    dragHoldY = mousePos.Y - shapes[shapes.length - 1].y;
 
                     //The "target" position is where the object should be if it were to move there instantaneously. But we will
                     //set up the code so that this target position is approached gradually, producing a smooth motion.
-                    targetX = mouseX - dragHoldX;
-                    targetY = mouseY - dragHoldY;
+                    targetX = mousePos.X - dragHoldX;
+                    targetY = mousePos.Y - dragHoldY;
 
                     //start timer
                     timer = setInterval(onTimerTick, 1000 / 30);
@@ -160,27 +164,22 @@
                 var minY = shapeRad;
                 var maxY = canvas.height - shapeRad;
                 //getting mouse position correctly 
-                var bRect = canvas.getBoundingClientRect();
-                mouseX = (evt.clientX - bRect.left) * (canvas.width / bRect.width);
-                mouseY = (evt.clientY - bRect.top) * (canvas.height / bRect.height);
+                mousePos = getMousePos(canvas, evt);
 
                 //clamp x and y positions to prevent object from dragging outside of canvas
-                posX = mouseX - dragHoldX;
+                posX = mousePos.X - dragHoldX;
                 posX = (posX < minX) ? minX : ((posX > maxX) ? maxX : posX);
-                posY = mouseY - dragHoldY;
+                posY = mousePos.Y - dragHoldY;
                 posY = (posY < minY) ? minY : ((posY > maxY) ? maxY : posY);
 
                 targetX = posX;
                 targetY = posY;
             }
 
-            function hitTest(shape, mx, my) {
-
-                var dx;
-                var dy;
+            function isInside(shape, mx, my) {
+                var dx, dy;
                 dx = mx - shape.x;
                 dy = my - shape.y;
-
                 return (dx * dx + dy * dy < shape.rad * shape.rad);
             }
 
