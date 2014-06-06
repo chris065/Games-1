@@ -15,48 +15,29 @@
             init();
 
             var shapes;
-            var dragIndex;
-            var dragging;
-            var mouseX;
-            var mouseY;
-            var dragHoldX;
-            var dragHoldY;
+            var dragIndex, dragging;
+            var mouseX, mouseY;
+            var dragHoldX, dragHoldY;
+            var targetX, targetY;
             var timer;
-            var targetX;
-            var targetY;
-            var easeAmount;
-            var bgColor;
 
             function init() {
                 var numShapes = 10;
-                easeAmount = 0.20;
-
-                bgColor = "#000000";
-
-                shapes = [];
-
-                makeShapes(numShapes);
-
+                shapes = makeShapes(numShapes);
                 drawScreen();
-
                 canvas.addEventListener("mousedown", mouseDownListener, false);
             }
 
             function makeShapes(numShapes) {
                 var i;
-                var tempX;
-                var tempY;
+                var tempX, tempY;
                 var tempRad;
-                var r1;
-                var g1;
-                var b1;
-                var color1;
-                var r2;
-                var g2;
-                var b2;
-                var color2;
+                var r1, g1, b1, color1;
+                var r2, g2, b2, color2;
                 var tempGrad;
                 var gradFactor = 2;
+
+                shapes = [];
                 for (i = 0; i < numShapes; i++) {
                     tempRad = 5 + Math.floor(Math.random() * 20);
                     //randomized position
@@ -84,6 +65,8 @@
                     };
                     shapes.push(tempShape);
                 }
+
+                return shapes;
             }
 
             function mouseDownListener(evt) {
@@ -144,6 +127,7 @@
 		The amount to move towards the target position is set in the parameter 'easeAmount', which should range between
 		0 and 1. The target position is set by the mouse position as it is dragging.		
 		*/
+                var easeAmount = 0.20;
                 var lastShape = shapes[shapes.length - 1];
                 lastShape.x = lastShape.x + easeAmount * (targetX - lastShape.x);
                 lastShape.y = lastShape.y + easeAmount * (targetY - lastShape.y);
@@ -225,6 +209,7 @@
 
             function drawScreen() {
                 //bg
+                var bgColor = "#000000";
                 context.fillStyle = bgColor;
                 context.fillRect(0, 0, canvas.width, canvas.height);
 
