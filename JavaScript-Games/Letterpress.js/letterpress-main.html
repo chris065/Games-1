@@ -1,0 +1,205 @@
+<!doctype html>
+<html>
+
+<head>
+    <script>
+        window.addEventListener("load", main, false);
+
+        var canvas, context;
+        var tiles;
+        var isDragging;
+        var mousePos, targetPos, dragPos;
+        var timer;
+
+        function main() {
+
+            canvas = document.createElement("canvas");
+            canvas.width = 1024;
+            canvas.height = 768;
+            context = canvas.getContext("2d");
+            document.body.appendChild(canvas);
+
+            init();
+        }
+
+        function Tile(text, color, posX, posY, size) {
+            this.initalX = posX;
+            this.initalY = posY;
+            this.X = posX;
+            this.Y = posY;
+            this.color = color;
+            this.radius = size / 2;
+            this.text = text;
+            this.fontSize = +(0.75 * size);
+            this.fontFamiliy = "Calibri";
+            this.fontColor = 'rgb(35, 35, 35)';
+            this.font = "bold " + this.fontSize + "px " + this.fontFamiliy;
+        }
+
+         // Checks if the coordinates supplied are inside the tile
+        Tile.prototype.isClicked = function (clickX, clickY) {
+            return ((clickX > this.X - this.radius) && (clickX < this.X + this.radius) && (clickY > this.Y - this.radius) && (clickY < this.Y + this.radius));
+        };
+
+        Tile.prototype.draw = function (context) {
+            context.fillStyle = this.color;
+            context.fillRect(this.X - this.radius, this.Y - this.radius, 2 * this.radius, 2 * this.radius);
+
+            context.fillStyle = this.fontColor;
+            context.font = this.font;
+            context.fillText(this.text, this.X - context.measureText(this.text).width / 2, this.Y + this.fontSize / 4);
+        };
+
+        function init() {
+            var numTiles = 25;
+            var boardLetters = "GMYONIWNXGETSMZWZZLENTEGI";
+
+            tiles = makeTiles(numTiles, boardLetters);
+
+            drawScreen();
+            canvas.addEventListener("mousedown", mouseDownListener, false);
+        }
+
+        function makeTiles(numTiles, boardLetters) {
+            var i;
+            var tempX, tempY, tempColor;
+            var boardX, boardY;
+            var red = "rgb(247,153,141)";
+            var blue = "rgb(120,200,245)";
+            var gray = "rgb(230, 230, 230)";
+
+            var size = 114; // pixels
+            var offest = 1; // pixels
+
+            boardX = (canvas.width - 5 * (size + offest)) / 2;
+            boardY = (canvas.height - 5 * (size + offest)) - size / 10;
+
+            tiles = [];
+            for (i = 0; i < numTiles; i++) {
+                tempX = boardX + (i % 5) * (size + offest) + (size / 2);
+                tempY = boardY + (~~(i / 5) * (size + offest)) + (size / 2);
+
+                var rand = Math.random();
+                tempColor = rand < 0.33 ? red : rand < 0.66 ? blue : gray;
+
+                tiles.push(new Tile(boardLetters[i], tempColor, tempX, tempY, size));
+            }
+
+            return tiles;
+        }
+
+        function getMousePos(canvas, evt) {
+            var bRect = canvas.getBoundingClientRect();
+            return {
+                X: (evt.clientX - bRect.left) * (canvas.width / bRect.width),
+                Y: (evt.clientY - bRect.top) * (canvas.height / bRect.height)
+            };
+        }
+
+         // Returns the index of the tile being clicked or -1 if no tile was clicked
+        function getDragIndex(mouseX, mouseY) {
+            var dragIndex = -1;
+            // the variable will be overwritten to ensure only the topmost tile is dragged
+            for (i = 0; i < tiles.length; i++)
+                if (tiles[i].isClicked(mouseX, mouseY))
+                    dragIndex = i;
+            return dragIndex;
+        }
+
+        function mouseDownListener(evt) {
+            var i;
+            var dragIndex;
+            mousePos = getMousePos(canvas, evt);
+            // The index of the tile being clicked or -1 if no tile was clicked
+            dragIndex = getDragIndex(mousePos.X, mousePos.Y);
+
+            if (dragIndex > -1) {
+                isDragging = true;
+                window.addEventListener("mousemove", mouseMoveListener, false);
+
+                // We now place the currently dragged tile on top by placing it last in the array.
+                tiles.push(tiles.splice(dragIndex, 1)[0]);
+
+                // We record the point on the dragged tile where the mouse is "holding" it:          
+                dragPos = {
+                    X: mousePos.X - tiles[tiles.length - 1].X,
+                    Y: mousePos.Y - tiles[tiles.length - 1].Y,
+                };
+
+                // The "target" position is where the object should be if it were to move there instantaneously. But we will
+                // set up the code so that this target position is approached gradually, producing a smooth motion. 
+                targetPos = {
+                    X: mousePos.X - dragPos.X,
+                    Y: mousePos.Y - dragPos.Y,
+                };
+
+                // Start timer
+                timer = setInterval(onTimerTick, 1000 / 60);
+            }
+            canvas.removeEventListener("mousedown", mouseDownListener, false);
+            window.addEventListener("mouseup", mouseUpListener, false);
+
+            // Prevents the mouse down from having an effect on the main browser window:
+            evt.preventDefault();
+        }
+
+        function onTimerTick() {
+            var easeAmount = 0.2;
+            // The moving shape is the last in the array
+            var topTile = tiles[tiles.length - 1];
+            topTile.X = topTile.X + easeAmount * (targetPos.X - topTile.X);
+            topTile.Y = topTile.Y + easeAmount * (targetPos.Y - topTile.Y);
+
+            // Stop the timer when the target position is reached (close enough)
+            if ((!isDragging) && (Math.abs(topTile.X - targetPos.X) < 0.1) && (Math.abs(topTile.Y - targetPos.Y) < 0.1)) {
+                // Snap the tile to its final position
+                topTile.X = targetPos.X;
+                topTile.Y = targetPos.Y;
+                // Stop timer:
+                clearInterval(timer);
+            }
+            drawScreen();
+        }
+
+        function mouseUpListener(evt) {
+            canvas.addEventListener("mousedown", mouseDownListener, false);
+            window.removeEventListener("mouseup", mouseUpListener, false);
+            if (isDragging) {
+                isDragging = false;
+                // Make the tile return to its intial position
+                targetPos.X = tiles[tiles.length - 1].initalX;
+                targetPos.Y = tiles[tiles.length - 1].initalY;
+                window.removeEventListener("mousemove", mouseMoveListener, false);
+            }
+        }
+
+        function mouseMoveListener(evt) {
+            // Updates target position
+            var radius = tiles[tiles.length - 1].radius;
+            var minX = radius;
+            var maxX = canvas.width - radius;
+            var minY = radius;
+            var maxY = canvas.height - radius;
+
+            mousePos = getMousePos(canvas, evt);
+
+            // Clamp x and y positions to prevent object from dragging outside of canvas
+            targetPos.X = Math.min(Math.max(mousePos.X - dragPos.X, minX), maxX);
+            targetPos.Y = Math.min(Math.max(mousePos.Y - dragPos.Y, minY), maxY);
+        }
+
+        function drawScreen() {
+            context.fillStyle = 'rgb(240, 239, 236)';
+            context.fillRect(0, 0, canvas.width, canvas.height);
+
+            for (var i = 0; i < tiles.length; i++)
+                tiles[i].draw(context);
+        }
+    </script>
+
+</head>
+
+<body>
+</body>
+
+</html>
