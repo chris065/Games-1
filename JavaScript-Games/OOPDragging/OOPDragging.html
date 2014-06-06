@@ -3,33 +3,23 @@
 
 <head>
     <script>
-        //JavaScript HTML5 Canvas example by Dan Gries, rectangleworld.com.
-         //The basic setup here, including the debugging code and window load listener, is copied from 'HTML5 Canvas' by Fulton & Fulton.
-         //Checking for browser compatibility is accomplished with the Modernizr JavaScript library.
-         //The latest version of the library is available at www.modernizr.com.
-
         window.addEventListener("load", canvasApp, false);
 
-        function SquareTile(posX, posY) {
+        function SquareTile(posX, posY, size) {
             this.x = posX;
             this.y = posY;
-            this.velX = 0;
-            this.velY = 0;
-            this.accelX = 0;
-            this.accelY = 0;
-            this.color = "#FF0000";
-            this.radius = 10;
+            this.color = "rgb(230, 230, 230)";
+            this.radius = size / 2;
         }
 
-         //The function below returns a Boolean value representing whether the point with the coordinates supplied "hits" the particle.
-        SquareTile.prototype.hitTest = function (hitX, hitY) {
-            return ((hitX > this.x - this.radius) && (hitX < this.x + this.radius) && (hitY > this.y - this.radius) && (hitY < this.y + this.radius));
+         // Checks if the coordinates supplied are inside the particle
+        SquareTile.prototype.isNear = function (clickX, clickY) {
+            return ((clickX > this.x - this.radius) && (clickX < this.x + this.radius) && (clickY > this.y - this.radius) && (clickY < this.y + this.radius));
         };
 
-         //A function for drawing the particle.
-        SquareTile.prototype.drawToContext = function (theContext) {
-            theContext.fillStyle = this.color;
-            theContext.fillRect(this.x - this.radius, this.y - this.radius, 2 * this.radius, 2 * this.radius);
+        SquareTile.prototype.draw = function (context) {
+            context.fillStyle = this.color;
+            context.fillRect(this.x - this.radius, this.y - this.radius, 2 * this.radius, 2 * this.radius);
         };
 
         function canvasApp() {
@@ -56,7 +46,7 @@
 
             function init() {
                 numShapes = 25;
-                easeAmount = 0.45;
+                easeAmount = 0.2;
 
                 shapes = [];
 
@@ -71,20 +61,18 @@
                 var i;
                 var tempX;
                 var tempY;
-                var tempRad;
                 var tempColor;
                 var red = "rgb(247,153,141)";
                 var blue = "rgb(120,200,245)";
-                var radius = 40;
+                var size = 80;
 
                 for (i = 0; i < numShapes; i++) {
-                    tempRad = radius;
-                    tempX = Math.random() * (canvas.width - tempRad);
-                    tempY = Math.random() * (canvas.height - tempRad);
+                    tempX = Math.random() * canvas.width;
+                    tempY = Math.random() * canvas.height;
                     tempColor = Math.random() < 0.5 ? red : blue;
-                    tempShape = new SquareTile(tempX, tempY);
+
+                    tempShape = new SquareTile(tempX, tempY, size);
                     tempShape.color = tempColor;
-                    tempShape.radius = tempRad;
                     shapes.push(tempShape);
                 }
             }
@@ -99,7 +87,7 @@
 
                 // Find if a shape was clicked. 
                 for (i = 0; i < numShapes; i++) {
-                    if (shapes[i].hitTest(mouseX, mouseY)) {
+                    if (shapes[i].isNear(mouseX, mouseY)) {
                         dragging = true;
                         //the following variable will be reset if this loop repeats with another successful hit:
                         dragIndex = i;
@@ -122,19 +110,13 @@
                     targetY = mouseY - dragHoldY;
 
                     //start timer
-                    timer = setInterval(onTimerTick, 1000 / 30);
+                    timer = setInterval(onTimerTick, 1000 / 60);
                 }
                 canvas.removeEventListener("mousedown", mouseDownListener, false);
                 window.addEventListener("mouseup", mouseUpListener, false);
 
-                //code below prevents the mouse down from having an effect on the main browser window:
-                if (evt.preventDefault) {
-                    evt.preventDefault();
-                } //standard
-                else if (evt.returnValue) {
-                    evt.returnValue = false;
-                } //older IE
-                return false;
+                // Prevents the mouse down from having an effect on the main browser window:
+                evt.preventDefault();
             }
 
             function onTimerTick() {
@@ -190,13 +172,13 @@
                 for (i = 0; i < numShapes; i++) {
                     //the drawing of the shape is handled by a function inside the external class.
                     //we must pass as an argument the context to which we are drawing the shape.
-                    shapes[i].drawToContext(context);
+                    shapes[i].draw(context);
                 }
             }
 
             function drawScreen() {
                 //bg
-                context.fillStyle = "#000000";
+                context.fillStyle = "#e0e0e0";
                 context.fillRect(0, 0, canvas.width, canvas.height);
 
                 drawShapes();
