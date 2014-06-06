@@ -101,7 +101,7 @@
                     };
 
                     // Start timer
-                    timer = setInterval(onTimerTick, 1000 / 30);
+                    timer = setInterval(onTimerTick, 1000 / 60);
                 }
 
                 canvas.removeEventListener("mousedown", mouseDownListener, false);
@@ -150,12 +150,12 @@
                 var maxX = canvas.width - shapeRad;
                 var minY = shapeRad;
                 var maxY = canvas.height - shapeRad;
- 
+
                 mousePos = getMousePos(canvas, evt);
 
                 //clamp x and y positions to prevent object from dragging outside of canvas
-				targetPos.X = Math.min(Math.max(mousePos.X - dragPos.X, minX), maxX);
-				targetPos.Y = Math.min(Math.max(mousePos.Y - dragPos.Y, minY), maxY);
+                targetPos.X = Math.min(Math.max(mousePos.X - dragPos.X, minX), maxX);
+                targetPos.Y = Math.min(Math.max(mousePos.Y - dragPos.Y, minY), maxY);
             }
 
             function isInside(shape, mx, my) {
@@ -173,6 +173,11 @@
                     context.arc(shapes[i].X, shapes[i].Y, shapes[i].rad, 0, 2 * Math.PI, false);
                     context.closePath();
                     context.fill();
+
+                    // context.fillRect(shapes[i].X,shapes[i].Y,shapes[i].rad,shapes[i].rad);
+
+                    // context.font = "32px Calibri";
+                    // context.fillText("A", shapes[i].X, shapes[i].Y);
                 }
             }
 
