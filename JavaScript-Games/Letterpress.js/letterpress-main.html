@@ -8,8 +8,8 @@
         var canvas, context;
         var tiles;
         var isDragging;
-        var targetPos, dragOffset;
         var timer;
+        var dragTile;
 
         function main() {
 
@@ -122,21 +122,19 @@
                 isDragging = true;
                 window.addEventListener("mousemove", mouseMoveListener, false);
 
+                dragTile = tiles[dragIndex];
+
                 // We now place the currently dragged tile on top by placing it last in the array.
                 tiles.push(tiles.splice(dragIndex, 1)[0]);
 
                 // We record the point on the dragged tile where the mouse is "holding" it:          
-                dragOffset = {
-                    X: mousePos.X - tiles[tiles.length - 1].X,
-                    Y: mousePos.Y - tiles[tiles.length - 1].Y,
-                };
+                dragTile.clickOffsetX = mousePos.X - dragTile.X;
+                dragTile.clickOffsetY = mousePos.Y - dragTile.Y;
 
                 // The "target" position is where the object should be if it were to move there instantaneously. But we will
                 // set up the code so that this target position is approached gradually, producing a smooth motion. 
-                targetPos = {
-                    X: mousePos.X - dragOffset.X,
-                    Y: mousePos.Y - dragOffset.Y,
-                };
+                dragTile.targetPosX = dragTile.X;
+                dragTile.targetPosY = dragTile.Y;
 
                 // Start timer
                 timer = setInterval(onTimerTick, 1000 / 60);
@@ -154,15 +152,15 @@
             if (isDragging) {
                 isDragging = false;
                 // Make the tile return to its intial position
-                targetPos.X = tiles[tiles.length - 1].initalX;
-                targetPos.Y = tiles[tiles.length - 1].initalY;
+                dragTile.targetPosX = dragTile.initalX;
+                dragTile.targetPosY = dragTile.initalY;
                 window.removeEventListener("mousemove", mouseMoveListener, false);
             }
         }
 
         function mouseMoveListener(evt) {
             // Updates target position
-            var size = tiles[tiles.length - 1].size;
+            var size = dragTile.size;
             var minX = size;
             var maxX = canvas.width - size;
             var minY = size;
@@ -171,22 +169,21 @@
             var mousePos = getMousePos(canvas, evt);
 
             // Clamp x and y positions to prevent object from dragging outside of canvas
-            targetPos.X = Math.min(Math.max(mousePos.X - dragOffset.X, minX), maxX);
-            targetPos.Y = Math.min(Math.max(mousePos.Y - dragOffset.Y, minY), maxY);
+            dragTile.targetPosX = Math.min(Math.max(mousePos.X - dragTile.clickOffsetX, minX), maxX);
+            dragTile.targetPosY = Math.min(Math.max(mousePos.Y - dragTile.clickOffsetY, minY), maxY);
         }
 
         function onTimerTick() {
             var easeAmount = 0.2;
-            // The moving shape is the last in the array
-            var topTile = tiles[tiles.length - 1];
-            topTile.X = topTile.X + easeAmount * (targetPos.X - topTile.X);
-            topTile.Y = topTile.Y + easeAmount * (targetPos.Y - topTile.Y);
+            // The moving tile is the last in the array
+            dragTile.X += easeAmount * (dragTile.targetPosX - dragTile.X);
+            dragTile.Y += easeAmount * (dragTile.targetPosY - dragTile.Y);
 
             // Stop the timer when the target position is reached (close enough)
-            if ((!isDragging) && (Math.abs(topTile.X - targetPos.X) < 0.1) && (Math.abs(topTile.Y - targetPos.Y) < 0.1)) {
+            if ((!isDragging) && (Math.abs(dragTile.X - dragTile.targetPosX) < 0.1) && (Math.abs(dragTile.Y - dragTile.targetPosY) < 0.1)) {
                 // Snap the tile to its final position
-                topTile.X = targetPos.X;
-                topTile.Y = targetPos.Y;
+                dragTile.X = dragTile.targetPosX;
+                dragTile.Y = dragTile.targetPosY;
                 // Stop timer:
                 clearInterval(timer);
             }
