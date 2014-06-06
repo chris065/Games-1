@@ -48,6 +48,8 @@
                     tempShape = {
                         X: tempX,
                         Y: tempY,
+                        startX: tempX,
+                        startY: tempY,
                         rad: tempRad,
                         color: tempColor,
                     };
@@ -134,6 +136,9 @@
                 window.removeEventListener("mouseup", mouseUpListener, false);
                 if (dragging) {
                     dragging = false;
+                    // Make the shape to return to its original starting position
+                    targetPos.X = shapes[shapes.length - 1].startX;
+                    targetPos.Y = shapes[shapes.length - 1].startY;
                     window.removeEventListener("mousemove", mouseMoveListener, false);
                 }
             }
