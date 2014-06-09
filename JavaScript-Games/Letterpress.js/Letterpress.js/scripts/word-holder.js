@@ -19,3 +19,9 @@
  WordHolder.prototype.addTile = function (tile) {
      this.wordLetters.push(tile);
  };
+
+
+  // Removes a tile
+ WordHolder.prototype.removeTile = function (tile) {
+     //this.wordLetters.remove(tile);
+ };

@@ -14,6 +14,7 @@ function Tile(text, color, posX, posY, size, coords) {
     this.coords = coords;
     this.isMoving = false;
     this.wasDragged = false;
+    this.isUsedInWord = false;
 }
 
 // Checks if the coordinates supplied are inside the tile

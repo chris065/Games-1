@@ -74,6 +74,10 @@ Tile.prototype.onMouseDown = function (mousePos, dragIndex) {
         this.clickOffsetX = mousePos.X - this.X;
         this.clickOffsetY = mousePos.Y - this.Y;
 
+        // remember where the tile starts from, so it can return back to this position
+        this.startDragX = this.X;
+        this.startDragY = this.Y;
+
         // The "target" position is where the object should be if it were to move there instantaneously. But we will
         // set up the code so that this target position is approached gradually, producing a smooth motion. 
         this.targetPosX = this.X;
@@ -105,7 +109,7 @@ Tile.prototype.move = function () {
         this.X += easeAmount * (this.targetPosX - this.X);
         this.Y += easeAmount * (this.targetPosY - this.Y);
 
-        if ((Math.abs(this.X - this.initalX) > 5) || (Math.abs(this.Y - this.initalY) > 5)) {
+        if ((Math.abs(this.X - this.startDragX) > 5) || (Math.abs(this.Y - this.startDragY) > 5)) {
             this.wasDragged = true;
         }
 
@@ -126,14 +130,25 @@ Tile.prototype.move = function () {
 Tile.prototype.onMouseUp = function () {
     if (this.wasDragged) {
         // Make the tile return to its intial position
-        this.targetPosX = this.initalX;
-        this.targetPosY = this.initalY;
+        this.targetPosX = this.startDragX;
+        this.targetPosY = this.startDragY;
     } else {
-        // Make the tile go up
-        this.targetPosX = 0;
-        this.targetPosY = 0;
-        addToWord(this.text);
+        if (this.isUsedInWord) {
+            // Make the tile go down
+            this.targetPosX = this.initalX;
+            this.targetPosY = this.initalY;
 
-        wordHolder.addTile(this);
+            wordHolder.removeTile(this);
+            this.isUsedInWord = false;
+        }
+        else {
+            // Make the tile go up
+            this.targetPosX = 0;
+            this.targetPosY = 0;
+            addToWord(this.text);
+
+            wordHolder.addTile(this);
+            this.isUsedInWord = true;
+        }
     }
 }
