@@ -47,34 +47,36 @@ function mouseUpListener(evt) {
     window.removeEventListener("mouseup", mouseUpListener, false);
     if (isDragging) {
         isDragging = false;
-
-        if (dragTile.wasDragged) {
-            // Make the tile return to its intial position
-            dragTile.targetPosX = dragTile.initalX;
-            dragTile.targetPosY = dragTile.initalY;
-        } else {
-            // Make the tile go up
-            dragTile.targetPosX = 0;
-            dragTile.targetPosY = 0;
-            addToWord(dragTile.text);
-
-            wordHolder.addTile(dragTile);
-        }
+        dragTile.onMouseUp();
         window.removeEventListener("mousemove", mouseMoveListener, false);
+    }
+}
+
+Tile.prototype.onMouseUp = function () {
+    if (this.wasDragged) {
+        // Make the tile return to its intial position
+        this.targetPosX = this.initalX;
+        this.targetPosY = this.initalY;
+    } else {
+        // Make the tile go up
+        this.targetPosX = 0;
+        this.targetPosY = 0;
+        addToWord(this.text);
+
+        wordHolder.addTile(this);
     }
 }
 
 function mouseMoveListener(evt) {
     var mousePos = getMousePos(canvas, evt);
     if (isDragging) {
-        dragTile.drag(mousePos);
+        dragTile.updateTargetPosition(mousePos);
     }
 }
 
-Tile.prototype.drag = function (mousePos) {   
+Tile.prototype.updateTargetPosition = function (mousePos) {   
     // check isDragging just in case
     if (isDragging) {
-        // Updates target position
         var minX = 0;
         var maxX = canvas.width - this.size;
         var minY = 0;
@@ -107,26 +109,32 @@ function getMousePos(canvas, evt) {
 
 // Runs while the timer is ticking
 function onTimerTick() {
-    // The next variable controls the lag in the tile movement (from 0 to 1)
-    var easeAmount = 0.2;
-    // Update the moving tile position
-    dragTile.X += easeAmount * (dragTile.targetPosX - dragTile.X);
-    dragTile.Y += easeAmount * (dragTile.targetPosY - dragTile.Y);
-
-    if ((Math.abs(dragTile.X - dragTile.initalX) > 5) || (Math.abs(dragTile.Y - dragTile.initalY) > 5)) {
-        dragTile.wasDragged = true;
-    }
-
-    // Stop the timer when the target position is reached (close enough)
-    if ((!isDragging) && (Math.abs(dragTile.X - dragTile.targetPosX) < 0.1) && (Math.abs(dragTile.Y - dragTile.targetPosY) < 0.1)) {
-        // Snap the tile to its final position
-        dragTile.X = dragTile.targetPosX;
-        dragTile.Y = dragTile.targetPosY;
-
-        dragTile.isMoving = false;
-        dragTile.wasDragged = false;
-        // Stop timer:
-        clearInterval(timer);
-    }
+    dragTile.move();
     drawScreen();
+}
+
+Tile.prototype.move = function () {
+    if (this.isMoving) {
+        // The next variable controls the lag in the tile movement (from 0 to 1)
+        var easeAmount = 0.2;
+        // Update the moving tile position
+        this.X += easeAmount * (this.targetPosX - this.X);
+        this.Y += easeAmount * (this.targetPosY - this.Y);
+
+        if ((Math.abs(this.X - this.initalX) > 5) || (Math.abs(this.Y - this.initalY) > 5)) {
+            this.wasDragged = true;
+        }
+
+        // Stop the timer when the target position is reached (close enough)
+        if ((!isDragging) && (Math.abs(this.X - this.targetPosX) < 0.1) && (Math.abs(this.Y - this.targetPosY) < 0.1)) {
+            // Snap the tile to its final position
+            this.X = this.targetPosX;
+            this.Y = this.targetPosY;
+
+            this.isMoving = false;
+            this.wasDragged = false;
+            // Stop timer:
+            clearInterval(timer);
+        }        
+    }
 }
