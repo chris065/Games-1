@@ -114,15 +114,15 @@ Tile.prototype.move = function () {
         }
 
         // check if the tile is in the upper or lower half
-        if (!this.isUsedInWord && this.Y + this.size / 2 < boardY) {
-        	wordHolder.addTile(this);
-        	this.isUsedInWord = true;
-        }
+   //      if (!this.isUsedInWord && this.Y + this.size / 2 < boardY) {
+   //      	wordHolder.addTile(this);
+   //      	this.isUsedInWord = true;
+   //      }
 
-        if (this.isUsedInWord && this.Y + this.size / 2 >= boardY) {
-			wordHolder.removeTile(this);
-			this.isUsedInWord = false;
-        }
+   //      if (this.isUsedInWord && this.Y + this.size / 2 >= boardY) {
+			// wordHolder.removeTile(this);
+			// this.isUsedInWord = false;
+   //      }
 
         // Stop the timer when the target position is reached (close enough)
         if ((!isDragging) && (Math.abs(this.X - this.targetPosX) < 0.1) && (Math.abs(this.Y - this.targetPosY) < 0.1)) {
@@ -158,6 +158,9 @@ Tile.prototype.onMouseUp = function () {
     } else {
         if (this.isUsedInWord) {
             // Make the tile go down
+        	wordHolder.removeTile(this);
+        	this.isUsedInWord = false;
+        	
             this.targetPosX = this.initalX;
             this.targetPosY = this.initalY;
         }

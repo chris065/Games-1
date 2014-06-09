@@ -34,7 +34,7 @@ function prepareCanvas() {
 function prepareBoard() {
     var boardLetters = generateRandomLeters();
     tiles = makeTiles(boardLetters);
-    wordHolder = new WordHolder(0, 0);
+    wordHolder = new WordHolder(0, canvas.height / 20);
 }
 
 // Renders the canvas to screen
@@ -52,12 +52,12 @@ function makeTiles(boardLetters) {
     var tempX, tempY, tempColor;
     var red = "rgb(247,153,141)";
     var blue = "rgb(120,200,245)";
-    var gray = "rgb(230, 230, 230)";
+    var gray = "rgb(225, 225, 225)";
     var darkRed = "rgb(255, 67, 47)";
     var darkBlue = "rgb(0, 162, 255)";
-
+    var lightGray = "rgb(230, 230, 230)";
     var tileSize = 85; // pixels
-    var tileMargin = 1; // pixels
+    var tileMargin = 0; // pixels
 
     boardX = (canvas.width - 5 * (tileSize + tileMargin)) / 2;
     boardY = (canvas.height - 5 * (tileSize + tileMargin)) - tileSize / 4;
@@ -75,8 +75,8 @@ function makeTiles(boardLetters) {
         };
 
         var rand = Math.random();
-        tempColor = rand < 0.33 ? red : rand < 0.66 ? blue : gray;
-
+        //tempColor = rand < 0.33 ? red : rand < 0.66 ? blue : gray;
+        tempColor = i % 2 ? gray : lightGray;
         tiles.push(new Tile(boardLetters[i], tempColor, tempX, tempY, tileSize, boardPos));
     }
 

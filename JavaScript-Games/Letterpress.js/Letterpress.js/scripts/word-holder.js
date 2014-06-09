@@ -17,11 +17,12 @@
 
  // Adds a tile
  WordHolder.prototype.addTile = function (tile) {
+     var leftPadding = ~~((canvas.width - (~~(canvas.width / tile.size) * tile.size)) / 2);
+     tile.wordX = this.X + leftPadding + this.wordLetters.length * tile.size;
+     tile.wordY = this.Y;
+
      this.wordLetters.push(tile);
      console.log("word length" + "->" + this.wordLetters.length)
-
-     tile.wordX = this.X + this.wordLetters.length * tile.size;
-     tile.wordY = this.Y;
  };
 
   // Removes a tile
