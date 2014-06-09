@@ -17,30 +17,12 @@ function mouseDownListener(evt) {
     evt.preventDefault();
 }
 
-Tile.prototype.onMouseDown = function (mousePos, dragIndex) {
-        isDragging = true;
-        this.wasDragged = false; // not yet
-        window.addEventListener("mousemove", mouseMoveListener, false);
-
-        dragTile = this;
-        this.isMoving = true;
-
-        // We now place the currently dragged tile on top by placing it last in the array.
-        tiles.push(tiles.splice(dragIndex, 1)[0]);
-
-        // We record the point on the dragged tile where the mouse is "holding" it:          
-        this.clickOffsetX = mousePos.X - this.X;
-        this.clickOffsetY = mousePos.Y - this.Y;
-
-        // The "target" position is where the object should be if it were to move there instantaneously. But we will
-        // set up the code so that this target position is approached gradually, producing a smooth motion. 
-        this.targetPosX = this.X;
-        this.targetPosY = this.Y;
-
-        // Start timer
-        timer = setInterval(onTimerTick, 1000 / 60);
+function mouseMoveListener(evt) {
+    var mousePos = getMousePos(canvas, evt);
+    if (isDragging) {
+        dragTile.updateTargetPosition(mousePos);
+    }
 }
-
 
 function mouseUpListener(evt) {
     canvas.addEventListener("mousedown", mouseDownListener, false);
@@ -49,42 +31,6 @@ function mouseUpListener(evt) {
         isDragging = false;
         dragTile.onMouseUp();
         window.removeEventListener("mousemove", mouseMoveListener, false);
-    }
-}
-
-Tile.prototype.onMouseUp = function () {
-    if (this.wasDragged) {
-        // Make the tile return to its intial position
-        this.targetPosX = this.initalX;
-        this.targetPosY = this.initalY;
-    } else {
-        // Make the tile go up
-        this.targetPosX = 0;
-        this.targetPosY = 0;
-        addToWord(this.text);
-
-        wordHolder.addTile(this);
-    }
-}
-
-function mouseMoveListener(evt) {
-    var mousePos = getMousePos(canvas, evt);
-    if (isDragging) {
-        dragTile.updateTargetPosition(mousePos);
-    }
-}
-
-Tile.prototype.updateTargetPosition = function (mousePos) {   
-    // check isDragging just in case
-    if (isDragging) {
-        var minX = 0;
-        var maxX = canvas.width - this.size;
-        var minY = 0;
-        var maxY = canvas.height - this.size;
-
-        // Clamp x and y positions to prevent object from dragging outside of canvas
-        this.targetPosX = Math.min(Math.max(mousePos.X - this.clickOffsetX, minX), maxX);
-        this.targetPosY = Math.min(Math.max(mousePos.Y - this.clickOffsetY, minY), maxY);
     }
 }
 
@@ -113,6 +59,44 @@ function onTimerTick() {
     drawScreen();
 }
 
+Tile.prototype.onMouseDown = function (mousePos, dragIndex) {
+        isDragging = true;
+        this.wasDragged = false; // not yet
+        window.addEventListener("mousemove", mouseMoveListener, false);
+
+        dragTile = this;
+        this.isMoving = true;
+
+        // We now place the currently dragged tile on top by placing it last in the array.
+        tiles.push(tiles.splice(dragIndex, 1)[0]);
+
+        // We record the point on the dragged tile where the mouse is "holding" it:          
+        this.clickOffsetX = mousePos.X - this.X;
+        this.clickOffsetY = mousePos.Y - this.Y;
+
+        // The "target" position is where the object should be if it were to move there instantaneously. But we will
+        // set up the code so that this target position is approached gradually, producing a smooth motion. 
+        this.targetPosX = this.X;
+        this.targetPosY = this.Y;
+
+        // Start timer
+        timer = setInterval(onTimerTick, 1000 / 60);
+}
+
+Tile.prototype.updateTargetPosition = function (mousePos) {   
+    // check isDragging just in case
+    if (isDragging) {
+        var minX = 0;
+        var maxX = canvas.width - this.size;
+        var minY = 0;
+        var maxY = canvas.height - this.size;
+
+        // Clamp x and y positions to prevent object from dragging outside of canvas
+        this.targetPosX = Math.min(Math.max(mousePos.X - this.clickOffsetX, minX), maxX);
+        this.targetPosY = Math.min(Math.max(mousePos.Y - this.clickOffsetY, minY), maxY);
+    }
+}
+
 Tile.prototype.move = function () {
     if (this.isMoving) {
         // The next variable controls the lag in the tile movement (from 0 to 1)
@@ -136,5 +120,20 @@ Tile.prototype.move = function () {
             // Stop timer:
             clearInterval(timer);
         }        
+    }
+}
+
+Tile.prototype.onMouseUp = function () {
+    if (this.wasDragged) {
+        // Make the tile return to its intial position
+        this.targetPosX = this.initalX;
+        this.targetPosY = this.initalY;
+    } else {
+        // Make the tile go up
+        this.targetPosX = 0;
+        this.targetPosY = 0;
+        addToWord(this.text);
+
+        wordHolder.addTile(this);
     }
 }
