@@ -129,9 +129,17 @@ Tile.prototype.move = function () {
 
 Tile.prototype.onMouseUp = function () {
     if (this.wasDragged) {
-        // Make the tile return to its intial position
-        this.targetPosX = this.startDragX;
-        this.targetPosY = this.startDragY;
+        if(this.Y + this.size / 2 > boardY) {
+        	// lower half
+        	this.targetPosX = this.initalX;
+        	this.targetPosY = this.initalY;
+
+        } else {
+        	// upper half
+        	this.targetPosX = 0;
+        	this.targetPosY = 0;
+        }
+
     } else {
         if (this.isUsedInWord) {
             // Make the tile go down
