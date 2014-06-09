@@ -9,6 +9,7 @@ var wasDragged;
 var wordToSubmit = '';
 var words = [];
 var wordHolder; // holds the letters
+var boardX, boardY;
 
 function main() {
 
@@ -49,7 +50,6 @@ function drawScreen() {
 function makeTiles(boardLetters) {
     var i;
     var tempX, tempY, tempColor;
-    var boardX, boardY;
     var red = "rgb(247,153,141)";
     var blue = "rgb(120,200,245)";
     var gray = "rgb(230, 230, 230)";

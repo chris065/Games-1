@@ -5,27 +5,7 @@ function mouseDownListener(evt) {
     var dragIndex = getDragIndex(mousePos.X, mousePos.Y);
 
     if (dragIndex > -1) {
-        isDragging = true;
-        wasDragged = false; // not yet
-        window.addEventListener("mousemove", mouseMoveListener, false);
-
-        dragTile = tiles[dragIndex];
-        dragTile.isMoving = true;
-
-        // We now place the currently dragged tile on top by placing it last in the array.
-        tiles.push(tiles.splice(dragIndex, 1)[0]);
-
-        // We record the point on the dragged tile where the mouse is "holding" it:          
-        dragTile.clickOffsetX = mousePos.X - dragTile.X;
-        dragTile.clickOffsetY = mousePos.Y - dragTile.Y;
-
-        // The "target" position is where the object should be if it were to move there instantaneously. But we will
-        // set up the code so that this target position is approached gradually, producing a smooth motion. 
-        dragTile.targetPosX = dragTile.X;
-        dragTile.targetPosY = dragTile.Y;
-
-        // Start timer
-        timer = setInterval(onTimerTick, 1000 / 60);
+        tiles[dragIndex].onMouseDown(dragIndex,mousePos);
     }
     canvas.removeEventListener("mousedown", mouseDownListener, false);
     window.addEventListener("mouseup", mouseUpListener, false);
@@ -33,6 +13,31 @@ function mouseDownListener(evt) {
     // Prevents the mouse down from having an effect on the main browser window:
     evt.preventDefault();
 }
+
+Tile.prototype.onMouseDown = function (dragIndex, mousePos) {
+        isDragging = true;
+        wasDragged = false; // not yet
+        window.addEventListener("mousemove", mouseMoveListener, false);
+
+        dragTile = this;
+        this.isMoving = true;
+
+        // We now place the currently dragged tile on top by placing it last in the array.
+        tiles.push(tiles.splice(dragIndex, 1)[0]);
+
+        // We record the point on the dragged tile where the mouse is "holding" it:          
+        this.clickOffsetX = mousePos.X - this.X;
+        this.clickOffsetY = mousePos.Y - this.Y;
+
+        // The "target" position is where the object should be if it were to move there instantaneously. But we will
+        // set up the code so that this target position is approached gradually, producing a smooth motion. 
+        this.targetPosX = this.X;
+        this.targetPosY = this.Y;
+
+        // Start timer
+        timer = setInterval(onTimerTick, 1000 / 60);
+}
+
 
 function mouseUpListener(evt) {
     canvas.addEventListener("mousedown", mouseDownListener, false);
@@ -57,17 +62,20 @@ function mouseUpListener(evt) {
 }
 
 function mouseMoveListener(evt) {
-    // Updates target position
-    var minX = 0;
-    var maxX = canvas.width - dragTile.size;
-    var minY = 0;
-    var maxY = canvas.height - dragTile.size;
+    if (isDragging) {
 
-    var mousePos = getMousePos(canvas, evt);
+        // Updates target position
+        var minX = 0;
+        var maxX = canvas.width - dragTile.size;
+        var minY = 0;
+        var maxY = canvas.height - dragTile.size;
 
-    // Clamp x and y positions to prevent object from dragging outside of canvas
-    dragTile.targetPosX = Math.min(Math.max(mousePos.X - dragTile.clickOffsetX, minX), maxX);
-    dragTile.targetPosY = Math.min(Math.max(mousePos.Y - dragTile.clickOffsetY, minY), maxY);
+        var mousePos = getMousePos(canvas, evt);
+
+        // Clamp x and y positions to prevent object from dragging outside of canvas
+        dragTile.targetPosX = Math.min(Math.max(mousePos.X - dragTile.clickOffsetX, minX), maxX);
+        dragTile.targetPosY = Math.min(Math.max(mousePos.Y - dragTile.clickOffsetY, minY), maxY);
+    }
 }
 
 // Returns the index of the tile being clicked or -1 if no tile was clicked
