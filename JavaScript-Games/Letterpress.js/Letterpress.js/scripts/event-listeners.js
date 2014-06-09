@@ -60,31 +60,31 @@ function onTimerTick() {
 }
 
 Tile.prototype.onMouseDown = function (mousePos, dragIndex) {
-        isDragging = true;
-        this.wasDragged = false; // not yet
-        window.addEventListener("mousemove", mouseMoveListener, false);
+    isDragging = true;
+    this.wasDragged = false; // not yet
+    window.addEventListener("mousemove", mouseMoveListener, false);
 
-        dragTile = this;
-        this.isMoving = true;
+    dragTile = this;
+    this.isMoving = true;
 
-        // We now place the currently dragged tile on top by placing it last in the array.
-        tiles.push(tiles.splice(dragIndex, 1)[0]);
+    // We now place the currently dragged tile on top by placing it last in the array.
+    tiles.push(tiles.splice(dragIndex, 1)[0]);
 
-        // We record the point on the dragged tile where the mouse is "holding" it:          
-        this.clickOffsetX = mousePos.X - this.X;
-        this.clickOffsetY = mousePos.Y - this.Y;
+    // We record the point on the dragged tile where the mouse is "holding" it:          
+    this.clickOffsetX = mousePos.X - this.X;
+    this.clickOffsetY = mousePos.Y - this.Y;
 
-        // remember where the tile starts from, so it can return back to this position
-        this.startDragX = this.X;
-        this.startDragY = this.Y;
+    // remember where the tile starts from, so it can return back to this position
+    this.startDragX = this.X;
+    this.startDragY = this.Y;
 
-        // The "target" position is where the object should be if it were to move there instantaneously. But we will
-        // set up the code so that this target position is approached gradually, producing a smooth motion. 
-        this.targetPosX = this.X;
-        this.targetPosY = this.Y;
+    // The "target" position is where the object should be if it were to move there instantaneously. But we will
+    // set up the code so that this target position is approached gradually, producing a smooth motion. 
+    this.targetPosX = this.X;
+    this.targetPosY = this.Y;
 
-        // Start timer
-        timer = setInterval(onTimerTick, 1000 / 60);
+    // Start timer
+    timer = setInterval(onTimerTick, 1000 / 60);
 }
 
 Tile.prototype.updateTargetPosition = function (mousePos) {   
@@ -113,6 +113,17 @@ Tile.prototype.move = function () {
             this.wasDragged = true;
         }
 
+        // check if the tile is in the upper or lower half
+        if (!this.isUsedInWord && this.Y + this.size / 2 < boardY) {
+        	wordHolder.addTile(this);
+        	this.isUsedInWord = true;
+        }
+
+        if (this.isUsedInWord && this.Y + this.size / 2 >= boardY) {
+			wordHolder.removeTile(this);
+			this.isUsedInWord = false;
+        }
+
         // Stop the timer when the target position is reached (close enough)
         if ((!isDragging) && (Math.abs(this.X - this.targetPosX) < 0.1) && (Math.abs(this.Y - this.targetPosY) < 0.1)) {
             // Snap the tile to its final position
@@ -129,34 +140,34 @@ Tile.prototype.move = function () {
 
 Tile.prototype.onMouseUp = function () {
     if (this.wasDragged) {
-        if(this.Y + this.size / 2 > boardY) {
+        if (!this.isUsedInWord) {
         	// lower half
-        	this.targetPosX = this.initalX;
-        	this.targetPosY = this.initalY;
-
+        	if (this.targetPosY < this.Y) {
+        		// if it is moving up
+        		this.targetPosX = this.wordX;
+        		this.targetPosY = this.wordY;
+        	} else {
+        		this.targetPosX = this.initalX;
+        		this.targetPosY = this.initalY;
+        	}
         } else {
         	// upper half
-        	this.targetPosX = 0;
-        	this.targetPosY = 0;
+        	this.targetPosX = this.wordX;
+        	this.targetPosY = this.wordY;
         }
-
     } else {
         if (this.isUsedInWord) {
             // Make the tile go down
             this.targetPosX = this.initalX;
             this.targetPosY = this.initalY;
-
-            wordHolder.removeTile(this);
-            this.isUsedInWord = false;
         }
         else {
             // Make the tile go up
-            this.targetPosX = 0;
-            this.targetPosY = 0;
-            addToWord(this.text);
+        	wordHolder.addTile(this);
+        	this.isUsedInWord = true;
 
-            wordHolder.addTile(this);
-            this.isUsedInWord = true;
+            this.targetPosX = this.wordX;
+            this.targetPosY = this.wordY;
         }
     }
 }

@@ -18,6 +18,10 @@
  // Adds a tile
  WordHolder.prototype.addTile = function (tile) {
      this.wordLetters.push(tile);
+     console.log("word length" + "->" + this.wordLetters.length)
+
+     tile.wordX = this.X + this.wordLetters.length * tile.size;
+     tile.wordY = this.Y;
  };
 
   // Removes a tile
@@ -26,4 +30,6 @@
 	if (index > -1) {
 	    this.wordLetters.splice(index, 1);
 	}
+
+    console.log("word length" + "->" + this.wordLetters.length)
  };
