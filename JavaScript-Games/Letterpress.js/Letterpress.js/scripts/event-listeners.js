@@ -62,19 +62,24 @@ function mouseUpListener(evt) {
 }
 
 function mouseMoveListener(evt) {
+    var mousePos = getMousePos(canvas, evt);
     if (isDragging) {
+        dragTile.drag(mousePos);
+    }
+}
 
+Tile.prototype.drag = function (mousePos) {   
+    // check isDragging just in case
+    if (isDragging) {
         // Updates target position
         var minX = 0;
-        var maxX = canvas.width - dragTile.size;
+        var maxX = canvas.width - this.size;
         var minY = 0;
-        var maxY = canvas.height - dragTile.size;
-
-        var mousePos = getMousePos(canvas, evt);
+        var maxY = canvas.height - this.size;
 
         // Clamp x and y positions to prevent object from dragging outside of canvas
-        dragTile.targetPosX = Math.min(Math.max(mousePos.X - dragTile.clickOffsetX, minX), maxX);
-        dragTile.targetPosY = Math.min(Math.max(mousePos.Y - dragTile.clickOffsetY, minY), maxY);
+        this.targetPosX = Math.min(Math.max(mousePos.X - this.clickOffsetX, minX), maxX);
+        this.targetPosY = Math.min(Math.max(mousePos.Y - this.clickOffsetY, minY), maxY);
     }
 }
 
