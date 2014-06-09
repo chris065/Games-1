@@ -13,6 +13,7 @@ function Tile(text, color, posX, posY, size, coords) {
     this.font = "bold " + this.fontSize + "px " + this.fontFamiliy;
     this.coords = coords;
     this.isMoving = false;
+    this.wasDragged = false;
 }
 
 // Checks if the coordinates supplied are inside the tile

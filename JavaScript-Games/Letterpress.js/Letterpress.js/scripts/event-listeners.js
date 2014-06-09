@@ -5,7 +5,7 @@ function mouseDownListener(evt) {
     var dragIndex = getDragIndex(mousePos.X, mousePos.Y);
 
     if (dragIndex > -1) {
-        tiles[dragIndex].onMouseDown(dragIndex,mousePos);
+        tiles[dragIndex].onMouseDown(mousePos, dragIndex);
     }
     else {
         // check if one of the buttons is clicked (submit, clear etc.)
@@ -17,9 +17,9 @@ function mouseDownListener(evt) {
     evt.preventDefault();
 }
 
-Tile.prototype.onMouseDown = function (dragIndex, mousePos) {
+Tile.prototype.onMouseDown = function (mousePos, dragIndex) {
         isDragging = true;
-        wasDragged = false; // not yet
+        this.wasDragged = false; // not yet
         window.addEventListener("mousemove", mouseMoveListener, false);
 
         dragTile = this;
@@ -48,7 +48,7 @@ function mouseUpListener(evt) {
     if (isDragging) {
         isDragging = false;
 
-        if (wasDragged) {
+        if (dragTile.wasDragged) {
             // Make the tile return to its intial position
             dragTile.targetPosX = dragTile.initalX;
             dragTile.targetPosY = dragTile.initalY;
@@ -114,7 +114,7 @@ function onTimerTick() {
     dragTile.Y += easeAmount * (dragTile.targetPosY - dragTile.Y);
 
     if ((Math.abs(dragTile.X - dragTile.initalX) > 5) || (Math.abs(dragTile.Y - dragTile.initalY) > 5)) {
-        wasDragged = true;
+        dragTile.wasDragged = true;
     }
 
     // Stop the timer when the target position is reached (close enough)
@@ -124,7 +124,7 @@ function onTimerTick() {
         dragTile.Y = dragTile.targetPosY;
 
         dragTile.isMoving = false;
-        wasDragged = false;
+        dragTile.wasDragged = false;
         // Stop timer:
         clearInterval(timer);
     }

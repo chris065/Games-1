@@ -5,7 +5,7 @@ var tiles;
 var isDragging;
 var timer;
 var dragTile;
-var wasDragged;
+
 var wordToSubmit = '';
 var words = [];
 var wordHolder; // holds the letters
