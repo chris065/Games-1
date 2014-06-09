@@ -7,6 +7,9 @@ function mouseDownListener(evt) {
     if (dragIndex > -1) {
         tiles[dragIndex].onMouseDown(dragIndex,mousePos);
     }
+    else {
+        // check if one of the buttons is clicked (submit, clear etc.)
+    }
     canvas.removeEventListener("mousedown", mouseDownListener, false);
     window.addEventListener("mouseup", mouseUpListener, false);
 
