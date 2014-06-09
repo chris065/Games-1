@@ -20,8 +20,10 @@
      this.wordLetters.push(tile);
  };
 
-
   // Removes a tile
  WordHolder.prototype.removeTile = function (tile) {
-     //this.wordLetters.remove(tile);
+	var index = this.wordLetters.indexOf(tile);
+	if (index > -1) {
+	    this.wordLetters.splice(index, 1);
+	}
  };
