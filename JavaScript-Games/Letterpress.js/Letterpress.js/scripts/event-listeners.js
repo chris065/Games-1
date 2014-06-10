@@ -158,10 +158,18 @@ Tile.prototype.move = function () {
 Tile.prototype.onMouseUp = function () {
     if (this.wasDragged) {
 
-        if (! this.isUsedInWord && (this.Y - this.targetPosY > 5)) {
-    		// tile is not used and it is moving up -> add to word
+        if (! this.isUsedInWord && ((this.Y - this.targetPosY > 5) || this.Y + this.size / 2 < boardY)) {
+    		// tile is not used and is either moving up or released up -> add to word
         	wordHolder.addTile(this);
         	this.isUsedInWord = true;
+
+        } else if (this.isUsedInWord && (this.Y + this.size / 2 >= boardY)) {
+            // Make the tile go down
+        	wordHolder.removeTile(this);
+        	this.isUsedInWord = false;
+
+            this.targetPosX = this.initalX;
+            this.targetPosY = this.initalY;
 
         } else {
         	// return it to its starting position (where the drag started)
