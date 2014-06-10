@@ -18,7 +18,6 @@
  // Adds a tile
  WordHolder.prototype.addTile = function (tile) {
      this.wordLetters.push(tile);
-     console.log("word length" + "->" + this.wordLetters.length);
      this.updateTilePositions(tile)
  };
 
@@ -28,8 +27,6 @@
 	if (index > -1) {
 	    this.wordLetters.splice(index, 1);
 	}
-    console.log("word length" + "->" + this.wordLetters.length);
-
     this.updateTilePositions(tile);
  };
 
