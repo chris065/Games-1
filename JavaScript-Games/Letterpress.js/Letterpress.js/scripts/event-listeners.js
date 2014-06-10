@@ -6,8 +6,7 @@ function mouseDownListener(evt) {
 
     if (dragIndex > -1) {
         tiles[dragIndex].onMouseDown(mousePos, dragIndex);
-    }
-    else {
+    } else {
         // check if one of the buttons is clicked (submit, clear etc.)
     }
     canvas.removeEventListener("mousedown", mouseDownListener, false);
@@ -55,18 +54,18 @@ function getMousePos(canvas, evt) {
 
 // Runs while the timer is ticking
 function onTimerTick() {
-	var noTilesMoving = true;
+    var noTilesMoving = true;
     for (var i = 0; i < tiles.length; i++) {
         tiles[i].move();
-    	if (tiles[i].isMoving)
-			noTilesMoving = false;
+        if (tiles[i].isMoving)
+            noTilesMoving = false;
     }
 
     if (noTilesMoving) {
-    	if (timer) {
-			clearInterval(timer); 
-			timer = false; 
-    	}		
+        if (timer) {
+            clearInterval(timer);
+            timer = false;
+        }
     }
 
     drawScreen();
@@ -99,11 +98,11 @@ Tile.prototype.onMouseDown = function (mousePos, dragIndex) {
     this.targetPosY = this.Y;
 
     // Start timer
-     if (!timer)
+    if (!timer)
         timer = setInterval(onTimerTick, 1000 / 60);
 }
 
-Tile.prototype.updateTargetPosition = function (mousePos) {   
+Tile.prototype.updateTargetPosition = function (mousePos) {
     // check isDragging just in case
     if (isDragging) {
         var minX = 0;
@@ -129,7 +128,7 @@ Tile.prototype.move = function () {
             this.wasDragged = true;
         }
 
-        // Stop the timer when the target position is reached (close enough)
+        // Stop the motion when the target position is reached (close enough)
         if ((!isDragging) && (Math.abs(this.X - this.targetPosX) < 0.1) && (Math.abs(this.Y - this.targetPosY) < 0.1)) {
             // Snap the tile to its final position
             this.X = this.targetPosX;
@@ -137,37 +136,33 @@ Tile.prototype.move = function () {
 
             this.isMoving = false;
             this.wasDragged = false;
-            // Stop timer:
-            //clearInterval(timer);
-            //timer = false; 
-        }        
+        }
     }
 }
 
 Tile.prototype.onMouseUp = function () {
     if (this.wasDragged) {
-    	
-        if (! this.isUsedInWord && ((this.Y - this.targetPosY > 5) || this.Y + this.size / 2 < boardY)) {
-        	// tile is not used in word and is either moving up or released up
-        	wordHolder.addTile(this);
+
+        if (!this.isUsedInWord && ((this.Y - this.targetPosY > 5) || this.Y + this.size / 2 < boardY)) {
+            // tile is not used in word and is either moving up or released up
+            wordHolder.addTile(this);
 
         } else if (this.isUsedInWord && (this.Y + this.size / 2 >= boardY)) {
-        	// tile is used in word and released down
-        	wordHolder.removeTile(this);
+            // tile is used in word and released down
+            wordHolder.removeTile(this);
 
         } else {
-        	// return it to its starting position (where the drag started)
-    		this.targetPosX = this.startDragX;
-    		this.targetPosY = this.startDragY;
+            // return it to its starting position (where the drag started)
+            this.targetPosX = this.startDragX;
+            this.targetPosY = this.startDragY;
         }
 
     } else {
-    	// tile was clicked
+        // tile was clicked
         if (this.isUsedInWord) {
-        	wordHolder.removeTile(this);
-        }
-        else {
-        	wordHolder.addTile(this);
+            wordHolder.removeTile(this);
+        } else {
+            wordHolder.addTile(this);
         }
     }
 }
