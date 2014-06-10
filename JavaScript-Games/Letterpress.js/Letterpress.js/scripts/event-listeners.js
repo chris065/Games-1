@@ -159,18 +159,18 @@ Tile.prototype.onMouseUp = function () {
     if (this.wasDragged) {
         if (!this.isUsedInWord) {
         	// lower half
-        	if (this.targetPosY < this.Y) {
+        	if (this.Y - this.targetPosY > 5) {
         		// if it is moving up
         		this.targetPosX = this.wordX;
         		this.targetPosY = this.wordY;
         	} else {
-        		this.targetPosX = this.initalX;
-        		this.targetPosY = this.initalY;
+        		this.targetPosX = this.startDragX;
+        		this.targetPosY = this.startDragY;
         	}
         } else {
         	// upper half
-        	this.targetPosX = this.wordX;
-        	this.targetPosY = this.wordY;
+        	this.targetPosX = this.startDragX;
+        	this.targetPosY = this.startDragY;
         }
     } else {
         if (this.isUsedInWord) {
