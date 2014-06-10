@@ -138,6 +138,8 @@ Tile.prototype.move = function () {
             this.wasDragged = false;
         }
     }
+
+    // >>>>>>>>>>>>>>>>> this is the new tile position -> check if is used and update word holder
 }
 
 Tile.prototype.onMouseUp = function () {
