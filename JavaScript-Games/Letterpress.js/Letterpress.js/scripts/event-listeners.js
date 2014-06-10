@@ -125,7 +125,7 @@ Tile.prototype.move = function () {
         this.X += easeAmount * (this.targetPosX - this.X);
         this.Y += easeAmount * (this.targetPosY - this.Y);
 
-        if ((Math.abs(this.X - this.startDragX) > 5) || (Math.abs(this.Y - this.startDragY) > 5)) {
+        if ((Math.abs(this.X - this.startDragX) > 2) || (Math.abs(this.Y - this.startDragY) > 2)) {
             this.wasDragged = true;
         }
 
