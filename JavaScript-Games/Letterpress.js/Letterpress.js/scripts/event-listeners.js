@@ -55,19 +55,23 @@ function getMousePos(canvas, evt) {
 
 // Runs while the timer is ticking
 function onTimerTick() {
-	var noTileIsMoving = true;
+	var noTilesMoving = true;
     for (var i = 0; i < tiles.length; i++) {
         tiles[i].move();
     	if (tiles[i].isMoving)
-			noTileIsMoving = false;
+			noTilesMoving = false;
     }
 
-    if (noTileIsMoving) {
-		clearInterval(timer); 
-		timer = false; 
+    if (noTilesMoving) {
+    	if (timer) {
+			clearInterval(timer); 
+			timer = false; 
+    	}		
     }
 
     drawScreen();
+
+    console.log(timer);
 }
 
 Tile.prototype.onMouseDown = function (mousePos, dragIndex) {
@@ -95,7 +99,8 @@ Tile.prototype.onMouseDown = function (mousePos, dragIndex) {
     this.targetPosY = this.Y;
 
     // Start timer
-    timer = setInterval(onTimerTick, 1000 / 60);
+     if (!timer)
+        timer = setInterval(onTimerTick, 1000 / 60);
 }
 
 Tile.prototype.updateTargetPosition = function (mousePos) {   

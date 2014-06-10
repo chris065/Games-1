@@ -33,7 +33,7 @@
     this.updateTilePositions(tile);
  };
 
-  // UpdateTiles
+  // Update tile positions
  WordHolder.prototype.updateTilePositions = function (tile) {
     var leftPadding = (canvas.width - this.wordLetters.length * tile.size) / 2;
      for (var t = 0; t < this.wordLetters.length; t+=1) {
