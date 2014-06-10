@@ -158,22 +158,6 @@ Tile.prototype.move = function () {
 Tile.prototype.onMouseUp = function () {
     if (this.wasDragged) {
 
-        // if (this.isUsedInWord) {
-        // 	this.targetPosX = this.startDragX;
-        // 	this.targetPosY = this.startDragY;
-        // } else {
-
-        // 	if (this.Y - this.targetPosY > 5) {
-        // 		// if it is moving up -> add to word
-	       //  	wordHolder.addTile(this);
-	       //  	this.isUsedInWord = true;
-        // 	} else {
-        // 		this.targetPosX = this.startDragX;
-        // 		this.targetPosY = this.startDragY;
-        // 	}
-        // }
-
-
         if (! this.isUsedInWord && (this.Y - this.targetPosY > 5)) {
     		// tile is not used and it is moving up -> add to word
         	wordHolder.addTile(this);
@@ -181,13 +165,12 @@ Tile.prototype.onMouseUp = function () {
 
         } else {
         	// return it to its starting position (where the drag started)
-
     		this.targetPosX = this.startDragX;
     		this.targetPosY = this.startDragY;
         }
 
-
     } else {
+
         if (this.isUsedInWord) {
             // Make the tile go down
         	wordHolder.removeTile(this);
