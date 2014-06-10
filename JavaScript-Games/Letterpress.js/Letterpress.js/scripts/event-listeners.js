@@ -161,8 +161,9 @@ Tile.prototype.onMouseUp = function () {
         	// lower half
         	if (this.Y - this.targetPosY > 5) {
         		// if it is moving up
-        		this.targetPosX = this.wordX;
-        		this.targetPosY = this.wordY;
+            // Make the tile go up
+        	wordHolder.addTile(this);
+        	this.isUsedInWord = true;
         	} else {
         		this.targetPosX = this.startDragX;
         		this.targetPosY = this.startDragY;
