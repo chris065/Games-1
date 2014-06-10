@@ -22,29 +22,29 @@
      tile.isUsedInWord = true;
  };
 
-  // Removes a tile
+ // Removes a tile
  WordHolder.prototype.removeTile = function (tile) {
-	var index = this.wordLetters.indexOf(tile);
-	if (index > -1) {
-	    this.wordLetters.splice(index, 1);
-        this.updateTilePositions(tile);
-        tile.isUsedInWord = false;
+     var index = this.wordLetters.indexOf(tile);
+     if (index > -1) {
+         this.wordLetters.splice(index, 1);
+         this.updateTilePositions(tile);
+         tile.isUsedInWord = false;
 
-        tile.targetPosX = tile.initalX;
-        tile.targetPosY = tile.initalY;
-	}    
+         tile.targetPosX = tile.boardX;
+         tile.targetPosY = tile.boardY;
+     }
  };
 
-  // Update tile positions
+ // Update tile positions
  WordHolder.prototype.updateTilePositions = function (tile) {
-    var leftPadding = (canvas.width - this.wordLetters.length * tile.size) / 2;
-     for (var t = 0; t < this.wordLetters.length; t+=1) {
-        this.wordLetters[t].targetPosX = leftPadding + t * tile.size;
-        this.wordLetters[t].targetPosY = this.Y;
-        this.wordLetters[t].isMoving = true;
+     var leftPadding = (canvas.width - this.wordLetters.length * tile.size) / 2;
+     for (var t = 0; t < this.wordLetters.length; t += 1) {
+         this.wordLetters[t].targetPosX = leftPadding + t * tile.size;
+         this.wordLetters[t].targetPosY = this.Y;
+         this.wordLetters[t].isMoving = true;
      }
 
      // Start timer
      if (!timer)
-        timer = setInterval(onTimerTick, 1000 / 60);
+         timer = setInterval(onTimerTick, 1000 / 60);
  };
