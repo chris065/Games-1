@@ -7,7 +7,7 @@ function Tile(text, color, posX, posY, size, coords) {
     this.color = color;
     this.size = size;
     this.text = text;
-    this.fontSize = +(0.75 * size);
+    this.fontSize = ~~(0.75 * size);
     this.fontFamiliy = "'Calibri'";
     this.fontColor = 'rgb(35, 35, 35)';
     this.font = "bold " + this.fontSize + "px " + this.fontFamiliy;

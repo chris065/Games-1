@@ -56,11 +56,11 @@ function makeTiles(boardLetters) {
     var darkRed = "rgb(255, 67, 47)";
     var darkBlue = "rgb(0, 162, 255)";
     var lightGray = "rgb(230, 230, 230)";
-    var tileSize = 85; // pixels
+    var tileSize = ~~(canvas.height * 0.15); // pixels
     var tileMargin = 0; // pixels
 
     boardX = ~~((canvas.width - 5 * (tileSize + tileMargin)) / 2);
-    boardY = ~~((canvas.height - 5 * (tileSize + tileMargin)) - tileSize / 4);
+    boardY = ~~((canvas.height - 5 * (tileSize + tileMargin)) - canvas.height / 50);
 
     tiles = [];
     for (i = 0; i < boardLetters.length; i++) {
