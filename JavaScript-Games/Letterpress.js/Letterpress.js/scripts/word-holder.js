@@ -17,12 +17,9 @@
 
  // Adds a tile
  WordHolder.prototype.addTile = function (tile) {
-     var leftPadding = ~~((canvas.width - (~~(canvas.width / tile.size) * tile.size)) / 2);
-     tile.wordX = this.X + leftPadding + this.wordLetters.length * tile.size;
-     tile.wordY = this.Y;
-
      this.wordLetters.push(tile);
-     console.log("word length" + "->" + this.wordLetters.length)
+     console.log("word length" + "->" + this.wordLetters.length);
+     this.updateTilePositions(tile)
  };
 
   // Removes a tile
@@ -31,6 +28,21 @@
 	if (index > -1) {
 	    this.wordLetters.splice(index, 1);
 	}
+    console.log("word length" + "->" + this.wordLetters.length);
 
-    console.log("word length" + "->" + this.wordLetters.length)
+    this.updateTilePositions(tile);
+ };
+
+  // UpdateTiles
+ WordHolder.prototype.updateTilePositions = function (tile) {
+    var leftPadding = (canvas.width - this.wordLetters.length * tile.size) / 2;
+     for (var t = 0; t < this.wordLetters.length; t+=1) {
+        this.wordLetters[t].targetPosX = leftPadding + t * tile.size;
+        this.wordLetters[t].targetPosY = this.Y;
+        this.wordLetters[t].isMoving = true;
+     }
+
+     // Start timer
+     if (!timer)
+        timer = setInterval(onTimerTick, 1000 / 60);
  };

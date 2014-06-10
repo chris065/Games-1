@@ -55,7 +55,18 @@ function getMousePos(canvas, evt) {
 
 // Runs while the timer is ticking
 function onTimerTick() {
-    dragTile.move();
+	var noTileIsMoving = true;
+    for (var i = 0; i < tiles.length; i++) {
+        tiles[i].move();
+    	if (tiles[i].isMoving)
+			noTileIsMoving = false;
+    }
+
+    if (noTileIsMoving) {
+		clearInterval(timer); 
+		timer = false; 
+    }
+
     drawScreen();
 }
 
@@ -104,7 +115,7 @@ Tile.prototype.updateTargetPosition = function (mousePos) {
 Tile.prototype.move = function () {
     if (this.isMoving) {
         // The next variable controls the lag in the tile movement (from 0 to 1)
-        var easeAmount = 0.2;
+        var easeAmount = 0.15;
         // Update the moving tile position
         this.X += easeAmount * (this.targetPosX - this.X);
         this.Y += easeAmount * (this.targetPosY - this.Y);
@@ -133,7 +144,8 @@ Tile.prototype.move = function () {
             this.isMoving = false;
             this.wasDragged = false;
             // Stop timer:
-            clearInterval(timer);
+            //clearInterval(timer);
+            //timer = false; 
         }        
     }
 }
@@ -160,7 +172,7 @@ Tile.prototype.onMouseUp = function () {
             // Make the tile go down
         	wordHolder.removeTile(this);
         	this.isUsedInWord = false;
-        	
+
             this.targetPosX = this.initalX;
             this.targetPosY = this.initalY;
         }
@@ -168,9 +180,6 @@ Tile.prototype.onMouseUp = function () {
             // Make the tile go up
         	wordHolder.addTile(this);
         	this.isUsedInWord = true;
-
-            this.targetPosX = this.wordX;
-            this.targetPosY = this.wordY;
         }
     }
 }
