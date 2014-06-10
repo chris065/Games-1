@@ -129,17 +129,6 @@ Tile.prototype.move = function () {
             this.wasDragged = true;
         }
 
-        // check if the tile is in the upper or lower half
-   //      if (!this.isUsedInWord && this.Y + this.size / 2 < boardY) {
-   //      	wordHolder.addTile(this);
-   //      	this.isUsedInWord = true;
-   //      }
-
-   //      if (this.isUsedInWord && this.Y + this.size / 2 >= boardY) {
-			// wordHolder.removeTile(this);
-			// this.isUsedInWord = false;
-   //      }
-
         // Stop the timer when the target position is reached (close enough)
         if ((!isDragging) && (Math.abs(this.X - this.targetPosX) < 0.1) && (Math.abs(this.Y - this.targetPosY) < 0.1)) {
             // Snap the tile to its final position
@@ -157,19 +146,14 @@ Tile.prototype.move = function () {
 
 Tile.prototype.onMouseUp = function () {
     if (this.wasDragged) {
-
+    	
         if (! this.isUsedInWord && ((this.Y - this.targetPosY > 5) || this.Y + this.size / 2 < boardY)) {
-    		// tile is not used and is either moving up or released up -> add to word
+        	// tile is not used in word and is either moving up or released up
         	wordHolder.addTile(this);
-        	this.isUsedInWord = true;
 
         } else if (this.isUsedInWord && (this.Y + this.size / 2 >= boardY)) {
-            // Make the tile go down
+        	// tile is used in word and released down
         	wordHolder.removeTile(this);
-        	this.isUsedInWord = false;
-
-            this.targetPosX = this.initalX;
-            this.targetPosY = this.initalY;
 
         } else {
         	// return it to its starting position (where the drag started)
@@ -178,19 +162,12 @@ Tile.prototype.onMouseUp = function () {
         }
 
     } else {
-
+    	// tile was clicked
         if (this.isUsedInWord) {
-            // Make the tile go down
         	wordHolder.removeTile(this);
-        	this.isUsedInWord = false;
-
-            this.targetPosX = this.initalX;
-            this.targetPosY = this.initalY;
         }
         else {
-            // Make the tile go up
         	wordHolder.addTile(this);
-        	this.isUsedInWord = true;
         }
     }
 }

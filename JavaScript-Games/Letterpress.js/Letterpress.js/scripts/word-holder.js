@@ -18,7 +18,8 @@
  // Adds a tile
  WordHolder.prototype.addTile = function (tile) {
      this.wordLetters.push(tile);
-     this.updateTilePositions(tile)
+     this.updateTilePositions(tile);
+     tile.isUsedInWord = true;
  };
 
   // Removes a tile
@@ -26,8 +27,12 @@
 	var index = this.wordLetters.indexOf(tile);
 	if (index > -1) {
 	    this.wordLetters.splice(index, 1);
-	}
-    this.updateTilePositions(tile);
+        this.updateTilePositions(tile);
+        tile.isUsedInWord = false;
+
+        tile.targetPosX = tile.initalX;
+        tile.targetPosY = tile.initalY;
+	}    
  };
 
   // Update tile positions
