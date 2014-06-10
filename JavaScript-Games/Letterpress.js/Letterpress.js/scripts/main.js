@@ -59,8 +59,8 @@ function makeTiles(boardLetters) {
     var tileSize = 85; // pixels
     var tileMargin = 0; // pixels
 
-    boardX = (canvas.width - 5 * (tileSize + tileMargin)) / 2;
-    boardY = (canvas.height - 5 * (tileSize + tileMargin)) - tileSize / 4;
+    boardX = ~~((canvas.width - 5 * (tileSize + tileMargin)) / 2);
+    boardY = ~~((canvas.height - 5 * (tileSize + tileMargin)) - tileSize / 4);
 
     tiles = [];
     for (i = 0; i < boardLetters.length; i++) {
