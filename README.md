@@ -1,2 +1,1 @@
-Games in C# and JavaScript
-=========================
+## Small games in C# and JavaScript
